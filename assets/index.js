@@ -37,6 +37,8 @@ import left from './left.png';
 import headerbg from './headerbg.png';
 import loader from './loader.gif';
 import arrow from './arrow.png';
+import ShapeLogo from './ShapeLogo.png';
+import ShapeLogoNoBackground from './ShapeLogoNoBackground.png';
 
 export default {
   heartOutline,
@@ -78,4 +80,6 @@ export default {
   headerbg,
   loader,
   arrow,
+  ShapeLogo,
+  ShapeLogoNoBackground,
 };

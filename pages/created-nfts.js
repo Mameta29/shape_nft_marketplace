@@ -9,10 +9,11 @@ const CreatorDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchMyNFTsOrCreatedNFTs('fetchItemsListed').then((items) => {
-      setNfts(items);
-      setIsLoading(false);
-    });
+    fetchMyNFTsOrCreatedNFTs('fetchItemsListed')
+      .then((items) => {
+        setNfts(items);
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {

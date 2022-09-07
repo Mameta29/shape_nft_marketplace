@@ -29,14 +29,14 @@ const Footer = () => {
         <div className="flexStart flex-1 flex-col">
           <div className="flexCenter cursor-pointer">
             <Image
-              src={images.logo02}
+              src={images.ShapeLogoNoBackground}
               objectFit="contain"
               width={32}
               height={32}
               alt="logo"
             />
             <p className=" dark:text-white text-nft-dark font-semibold text-lg ml-1">
-              CryptoKet
+              Shape
             </p>
           </div>
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base mt-6">
@@ -60,7 +60,7 @@ const Footer = () => {
 
         <div className="flex-1 flexBetweenStart flex-wrap ml-10 md:ml-0 md:mt-8">
           <FooterLinks
-            heading="CryptoKet"
+            heading="Shape"
             items={['Explore', 'How it Works', 'Contact Us']}
           />
           <FooterLinks

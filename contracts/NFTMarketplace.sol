@@ -15,6 +15,7 @@ contract NFTMarketplace is ERC721URIStorage {
     uint256 listingPrice = 0.025 ether;
     address payable owner;
 
+    // NFTとリスト状態の情報をマッピング
     mapping(uint256 => MarketItem) private idToMarketItem;
 
     struct MarketItem {
@@ -33,11 +34,11 @@ contract NFTMarketplace is ERC721URIStorage {
         bool sold
     );
 
-    constructor() ERC721("Metaverse Tokens", "METT") {
+    constructor() ERC721("Shape Market", "SHP") {
         owner = payable(msg.sender);
     }
 
-    /* Updates the listing price of the contract */
+    /* リスト代更新 */
     function updateListingPrice(uint256 _listingPrice) public payable {
         require(
             owner == msg.sender,
@@ -46,13 +47,15 @@ contract NFTMarketplace is ERC721URIStorage {
         listingPrice = _listingPrice;
     }
 
-    /* Returns the listing price of the contract */
+    /* リスト代を返す */
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
     }
 
-    /* Mints a token and lists it in the marketplace */
-    function createToken(string memory tokenURI, uint256 price)
+    // setApprovalForAll実装のためParamにoperatorとapprovedを追加
+    // mintの段階ではapprovedはfalce
+    /* NFTをミントしてマーケットプレイス上に表示 */
+    function createToken(string memory tokenURI, uint256 price, address operator, bool approved)
         public
         payable
         returns (uint256)
@@ -62,11 +65,15 @@ contract NFTMarketplace is ERC721URIStorage {
 
         _mint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, tokenURI);
-        createMarketItem(newTokenId, price);
+        // setApprovalForAll実装のためParamにoperatorとapprovedを追加
+        createMarketItem(newTokenId, price, operator, approved);
         return newTokenId;
     }
 
-    function createMarketItem(uint256 tokenId, uint256 price) private {
+    // Paramにoperatorとapprovedを追加し
+    // setApprovalForAllを実装
+    // リストする際はapproved はtrueになる
+    function createMarketItem(uint256 tokenId, uint256 price, address operator, bool approved) private {
         require(price > 0, "Price must be at least 1 wei");
         require(
             msg.value == listingPrice,
@@ -75,43 +82,52 @@ contract NFTMarketplace is ERC721URIStorage {
 
         idToMarketItem[tokenId] = MarketItem(
             tokenId,
-            payable(msg.sender),
-            payable(address(this)),
+            payable(msg.sender),  // setter
+            //setApprovalForAll追記によりownerは address(this) ではなくsellerのまま
+            payable(msg.sender),  // owner
+            // payable(address(this)),
             price,
             false
         );
 
-        _transfer(msg.sender, address(this), tokenId);
+        // setApprovalForAll追記しtransferをコメントアウト
+        setApprovalForAll(operator, approved);
+        // _transfer(msg.sender, address(this), tokenId);
+
         emit MarketItemCreated(
             tokenId,
-            msg.sender,
-            address(this),
+            msg.sender,  // seller
+            //setApprovalForAll追記によりownerはaddress(this)ではなくsellerのまま
+            msg.sender,  // owner
+            // address(this),
             price,
             false
         );
     }
 
-    /* allows someone to resell a token they have purchased */
-    function resellToken(uint256 tokenId, uint256 price) public payable {
-        require(
-            idToMarketItem[tokenId].owner == msg.sender,
-            "Only item owner can perform this operation"
-        );
-        require(
-            msg.value == listingPrice,
-            "Price must be equal to listing price"
-        );
-        idToMarketItem[tokenId].sold = false;
-        idToMarketItem[tokenId].price = price;
-        idToMarketItem[tokenId].seller = payable(msg.sender);
-        idToMarketItem[tokenId].owner = payable(address(this));
-        _itemsSold.decrement();
+    // 買ったNFTは2字流通でしか売りに出さない。
+    // SBT使用予定なのでresellToken関数は一旦保留
+    // /* 購入したNFTの売り出し */
+    // function resellToken(uint256 tokenId, uint256 price) public payable {
+    //     require(
+    //         idToMarketItem[tokenId].owner == msg.sender,
+    //         "Only item owner can perform this operation"
+    //     );
+    //     require(
+    //         msg.value == listingPrice,
+    //         "Price must be equal to listing price"
+    //     );
+    //     idToMarketItem[tokenId].sold = false;
+    //     idToMarketItem[tokenId].price = price;
+    //     idToMarketItem[tokenId].seller = payable(msg.sender);
+    //     idToMarketItem[tokenId].owner = payable(address(this));
+    //     _itemsSold.decrement();
 
-        _transfer(msg.sender, address(this), tokenId);
-    }
+    //     _transfer(msg.sender, address(this), tokenId);
+    // }
 
-    /* Creates the sale of a marketplace item */
-    /* Transfers ownership of the item, as well as funds between parties */
+    /* NFTの購入 */
+    /* 当事者間のNFT所有権と資金を移転する */
     function createMarketSale(uint256 tokenId) public payable {
         uint256 price = idToMarketItem[tokenId].price;
         require(
@@ -127,7 +143,7 @@ contract NFTMarketplace is ERC721URIStorage {
         payable(idToMarketItem[tokenId].seller).transfer(msg.value);
     }
 
-    /* Returns all unsold market items */
+    /* リストされ購入されていないNFTを返す */
     function fetchMarketItems() public view returns (MarketItem[] memory) {
         uint256 itemCount = _tokenIds.current();
         uint256 unsoldItemCount = _tokenIds.current() - _itemsSold.current();
@@ -145,7 +161,7 @@ contract NFTMarketplace is ERC721URIStorage {
         return items;
     }
 
-    /* Returns only items that a user has purchased */
+    /* ユーザーが購入したNFTのみ返す */
     function fetchMyNFTs() public view returns (MarketItem[] memory) {
         uint256 totalItemCount = _tokenIds.current();
         uint256 itemCount = 0;
@@ -169,7 +185,7 @@ contract NFTMarketplace is ERC721URIStorage {
         return items;
     }
 
-    /* Returns only items a user has listed */
+    /* ユーザーがリストしたNFTのみ返す */
     function fetchItemsListed() public view returns (MarketItem[] memory) {
         uint256 totalItemCount = _tokenIds.current();
         uint256 itemCount = 0;
