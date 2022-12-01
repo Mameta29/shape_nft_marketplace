@@ -1,22 +1,27 @@
-const fs = require('fs');
+require('dotenv').config();
+require('@nomicfoundation/hardhat-toolbox');
+require('@nomiclabs/hardhat-etherscan');
 
-require('@nomiclabs/hardhat-waffle');
+/** @type import('hardhat/config').HardhatUserConfig */
 
-const privateKey = fs.readFileSync('.secret').toString().trim();
-
+const {
+  ALCHEMY_GOERLI_URL,
+  PRIVATE_KEY,
+  // ETHERSCAN_KEY,
+} = process.env;
 module.exports = {
+  solidity: '0.8.4',
   networks: {
-    hardhat: {
-      chainId: 1337,
+    goerli: {
+      url: ALCHEMY_GOERLI_URL,
+      accounts: [`0x${PRIVATE_KEY}`],
     },
-    mumbai: {
-      url: 'https://rpc-mumbai.maticvigil.com',
-      accounts: [privateKey],
-    },
-    // rinkeby: {
-    // url: 'https://rinkeby.infura.io/v3/bed4fdcc76bb4978a9a3103ef0946f64',
-    //   accounts: [privateKey],
+    // mainnet: {
+    //   url: MAINNET_URL,
+    //   accounts: [`0x${PRIVATE_KEY}`],
     // },
   },
-  solidity: '0.8.4',
+  // etherscan: {
+  //   apiKey: ETHERSCAN_KEY,
+  // },
 };
