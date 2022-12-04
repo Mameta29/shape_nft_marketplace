@@ -1,15 +1,34 @@
 import { useState, useMemo, useCallback, useContext } from 'react';
-import { create as ipfsHttpClient } from 'ipfs-http-client';
+import { create } from 'ipfs-http-client';
 import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import { Buffer } from 'buffer';
+// import fs from 'fs';
 
 import { NFTContext } from '../context/NFTContext';
 import { Button, Input, Loader } from '../components';
 import images from '../assets';
 
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+require('dotenv').config();
+
+const {
+  NEXT_PUBLIC_PROJECT_ID,
+  NEXT_PUBLIC_PROJECT_SECRET,
+  // ETHERSCAN_KEY,
+} = process.env;
+
+const auth = `Basic ${Buffer.from(`${NEXT_PUBLIC_PROJECT_ID}:${NEXT_PUBLIC_PROJECT_SECRET}`).toString('base64')}`;
+
+const client = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+    authorization: auth,
+  },
+});
 
 const CreateItem = () => {
   const { createSale, isLoadingNFT } = useContext(NFTContext);
@@ -20,7 +39,7 @@ const CreateItem = () => {
     try {
       const added = await client.add({ content: file });
 
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `https://shape-nft-project-test.infura-ipfs.io/${added.path}`;
 
       setFileUrl(url);
     } catch (error) {
