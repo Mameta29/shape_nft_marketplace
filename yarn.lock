@@ -5299,12 +5299,26 @@
   "resolved" "https://registry.npmjs.org/dotenv-expand/-/dotenv-expand-5.1.0.tgz"
   "version" "5.1.0"
 
+"dotenv-expand@^8.0.2":
+  "integrity" "sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg=="
+  "resolved" "https://registry.npmjs.org/dotenv-expand/-/dotenv-expand-8.0.3.tgz"
+  "version" "8.0.3"
+
+"dotenv-load@^2.0.1":
+  "integrity" "sha512-MNuXfspporu/oj1UeQuf88Zm7WjkUgGRH4z0pGyVqm6B924v+CdfQLzusyux+bvOssK7p+0ULYXn764pnGVRSA=="
+  "resolved" "https://registry.npmjs.org/dotenv-load/-/dotenv-load-2.0.1.tgz"
+  "version" "2.0.1"
+  dependencies:
+    "dotenv" "^16.0.0"
+    "dotenv-expand" "^8.0.2"
+    "shelljs" "^0.8.5"
+
 "dotenv@^10.0.0":
   "integrity" "sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-10.0.0.tgz"
   "version" "10.0.0"
 
-"dotenv@^16.0.3":
+"dotenv@^16.0.0", "dotenv@^16.0.3":
   "integrity" "sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz"
   "version" "16.0.3"
@@ -9045,12 +9059,17 @@
   "resolved" "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   "version" "2.6.2"
 
+"next-env@^1.1.1":
+  "integrity" "sha512-uZo/u0GhmkUaSg4Dcx39QsEGRFw2eianNsdzdm/9Bd4bTAfzDH/D6y0WyB34sESZ5hXPctHg3t3Q3U99QAMc1w=="
+  "resolved" "https://registry.npmjs.org/next-env/-/next-env-1.1.1.tgz"
+  "version" "1.1.1"
+
 "next-themes@^0.1.1":
   "integrity" "sha512-Iqxt6rhS/KfK/iHJ0tfFjTcdLEAI0AgwFuAFrMwLOPK5e+MI3I+fzyvBoS+VaOS+NldUiazurhgwYhrfV0VXsQ=="
   "resolved" "https://registry.npmjs.org/next-themes/-/next-themes-0.1.1.tgz"
   "version" "0.1.1"
 
-"next@>=10.2.0", "next@>=11.1.1", "next@12.1.0":
+"next@>= 5.1.0", "next@>=10.2.0", "next@>=11.1.1", "next@12.1.0":
   "integrity" "sha512-s885kWvnIlxsUFHq9UGyIyLiuD0G3BUC/xrH0CEnH5lHEWkwQcHOORgbDF0hbrW9vr/7am4ETfX4A7M6DjrE7Q=="
   "resolved" "https://registry.npmjs.org/next/-/next-12.1.0.tgz"
   "version" "12.1.0"
@@ -11229,7 +11248,7 @@
   "resolved" "https://registry.npmjs.org/shell-quote/-/shell-quote-1.7.4.tgz"
   "version" "1.7.4"
 
-"shelljs@^0.8.3":
+"shelljs@^0.8.3", "shelljs@^0.8.5":
   "integrity" "sha512-TiwcRcrkhHvbrZbnRcFYMLl30Dfov3HKqzp5tO5b4pt6G/SezKcYhmDg15zXVBswHmctSAQKznqNW2LO5tTDow=="
   "resolved" "https://registry.npmjs.org/shelljs/-/shelljs-0.8.5.tgz"
   "version" "0.8.5"

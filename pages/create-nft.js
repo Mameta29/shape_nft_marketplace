@@ -11,7 +11,7 @@ import { NFTContext } from '../context/NFTContext';
 import { Button, Input, Loader } from '../components';
 import images from '../assets';
 
-require('dotenv').config();
+const process = require('process');
 
 const {
   NEXT_PUBLIC_PROJECT_ID,
