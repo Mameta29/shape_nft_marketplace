@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useContext } from 'react';
-import { create } from 'ipfs-http-client';
+// import { create } from 'ipfs-http-client';
 import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
@@ -11,17 +11,34 @@ import { NFTContext } from '../context/NFTContext';
 import { Button, Input, Loader } from '../components';
 import images from '../assets';
 
-const process = require('process');
+// const process = require('process');
 
-const {
-  NEXT_PUBLIC_PROJECT_ID,
-  NEXT_PUBLIC_PROJECT_SECRET,
-  // ETHERSCAN_KEY,
-} = process.env;
+// const {
+//   NEXT_PUBLIC_PROJECT_ID,
+//   NEXT_PUBLIC_PROJECT_SECRET,
+// } = process.env;
 
-const auth = `Basic ${Buffer.from(`${NEXT_PUBLIC_PROJECT_ID}:${NEXT_PUBLIC_PROJECT_SECRET}`).toString('base64')}`;
+// const NEXT_PUBLIC_PROJECT_ID = '213e7fae2d27cf112290a03d9f80e86d9dd42a2b1d31db35f6ae79c1ad1487ca';
+// const NEXT_PUBLIC_PROJECT_SECRET = 'a25a611feee305e8c536f32db3be6fe8';
 
-const client = create({
+// // const auth = `Basic ${Buffer.from(`${NEXT_PUBLIC_PROJECT_ID}:${NEXT_PUBLIC_PROJECT_SECRET}`).toString('base64')}`;
+// const auth = `Basic ${Buffer.from(`${NEXT_PUBLIC_PROJECT_ID}:${NEXT_PUBLIC_PROJECT_SECRET}`).toString('base64')}`;
+
+// const client = create({
+//   host: 'ipfs.infura.io',
+//   port: 5001,
+//   protocol: 'https',
+//   headers: {
+//     authorization: auth,
+//   },
+// });
+const ipfsClient = require('ipfs-http-client');
+
+const projectId = '';
+const projectSecret = '';
+const auth = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString('base64')}`;
+
+const client = ipfsClient.create({
   host: 'ipfs.infura.io',
   port: 5001,
   protocol: 'https',
@@ -37,9 +54,13 @@ const CreateItem = () => {
 
   const uploadToInfura = async (file) => {
     try {
+      // console.log(process.env.NEXT_PUBLIC_PROJECT_ID);
+      // console.log(process.env.NEXT_PUBLIC_PROJECT_SECRET);
+      // console.log(process.env.ALCHEMY_GOERLI_URL);
       const added = await client.add({ content: file });
-
+      console.log(`added : ${added.cid}`);
       const url = `https://shape-nft-project-test.infura-ipfs.io/${added.path}`;
+      console.log(`url : ${url}`);
 
       setFileUrl(url);
     } catch (error) {
