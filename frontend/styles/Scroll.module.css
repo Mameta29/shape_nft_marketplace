@@ -1,0 +1,10 @@
+/* checkBoxのため追記 */
+
+.scroll {
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
