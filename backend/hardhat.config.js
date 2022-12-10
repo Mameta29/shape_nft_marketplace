@@ -7,6 +7,7 @@ require("@nomiclabs/hardhat-web3");
 
 const {
   ALCHEMY_GOERLI_URL,
+  ALCHEMY_MUMBAI_URL,
   PRIVATE_KEY,
   // ETHERSCAN_KEY,
 } = process.env;
@@ -19,6 +20,10 @@ module.exports = {
   networks: {
     goerli: {
       url: ALCHEMY_GOERLI_URL,
+      accounts: [`0x${PRIVATE_KEY}`],
+    },
+    mumbai: {
+      url: ALCHEMY_MUMBAI_URL,
       accounts: [`0x${PRIVATE_KEY}`],
     },
     fuji: {

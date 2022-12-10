@@ -10,6 +10,7 @@
     "test": "npx hardhat test",
     "compile": "npx hardhat compile",
     "deploy:goerli": "npx hardhat run scripts/deploy.js --network goerli",
+    "deploy:mumbai": "npx hardhat run scripts/deploy.js --network mumbai",
     "deploy:fuji": "npx hardhat run scripts/deploy.js --network fuji",
     "deploy:bsctest": "npx hardhat run scripts/deploy.js --network bsctest",
     "deploy:shibuya": "npx hardhat run scripts/deploy.js --network shibuya",

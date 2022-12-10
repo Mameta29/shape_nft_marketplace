@@ -49,12 +49,12 @@ cd frontend && yarn dev
 
 | network           | contract address                             |
 | ----------------- | -------------------------------------------- |
-| Munbai Network    | [0]()                                        |
+| Munbai Network    | [0](https://mumbai.polygonscan.com/address/) |
 | Shibuya Network   | [0](https://blockscout.com/shibuya/address/) |
 | Shiden            | [0](https://blockscout.com/shiden/address/)  |
-| Avalanche testnet | [0]()                                        |
-| goerli            | [0]()                                        |
-| BSC Testnet       | [0]()                                        |
+| Avalanche testnet | [0](https://testnet.snowtrace.io/address/)   |
+| goerli            | [0](https://goerli.etherscan.io/address/)    |
+| BSC Testnet       | [0](https://testnet.bscscan.com/address/)    |
 | Astar Network     | [0](https://blockscout.com/astar/address/)   |
 
 ### 参考文献
