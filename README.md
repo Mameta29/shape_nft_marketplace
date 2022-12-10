@@ -45,6 +45,18 @@ NFTMarket deployed to: 0x149920786500a12dA84185df4B4aAABe975Df5f8
 cd frontend && yarn dev
 ```
 
+### contract address
+
+| network           | contract address                             |
+| ----------------- | -------------------------------------------- |
+| Munbai Network    | [0]()                                        |
+| Shibuya Network   | [0](https://blockscout.com/shibuya/address/) |
+| Shiden            | [0](https://blockscout.com/shiden/address/)  |
+| Avalanche testnet | [0]()                                        |
+| goerli            | [0]()                                        |
+| BSC Testnet       | [0]()                                        |
+| Astar Network     | [0](https://blockscout.com/astar/address/)   |
+
 ### 参考文献
 
 1. [jsmasterypro-nft-marketplace](https://gitfront.io/r/user-6930330/yQ8XwQZYNAat/jsmasterypro-nft-marketplace/)
