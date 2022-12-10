@@ -1,0 +1,19 @@
+{
+  "name": "hardhat-project",
+  "main": "index.js",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "hardhat": "^2.12.3"
+  },
+  "scripts": {
+    "test": "npx hardhat test",
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.js --network goerli"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.0",
+    "dotenv": "^16.0.3",
+    "web3": "^1.8.1"
+  }
+}
