@@ -37,7 +37,6 @@ describe('NFTMarketplace', function () {
                   const { market } = await loadFixture(deployContract);
                   // get listprice
                   var price = await market.getListingPrice();
-                  // console.log("price:", Number(price));
                   // 名前とシンボル、リストした価格などの情報を確認
                   expect(await market.name()).to.eql(NAME);
                   expect(await market.symbol()).to.eql(SYMBOL);
@@ -112,15 +111,37 @@ describe('NFTMarketplace', function () {
                   const price = web3.utils.toWei('0.025');
                   // approved flag
                   const approved = true;
-                  // create token
-                  const id = await market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
-                        value: price
-                  });
+
+                  // create token & check emit event
+                  await expect(
+                        market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                              value: price
+                        })
+                  ).to.emit(market, "MarketItemCreated");
 
                   // get market items 
                   const items = await market.fetchMarketItems();
                   // check
                   expect(items.length).to.eql(1);
+            });
+
+            it("check tokenURI", async function () {
+                  // コントラクトをデプロイ
+                  const { market, otherAccount} = await loadFixture(deployContract);
+                  // price
+                  const price = web3.utils.toWei('0.025');
+                  // approved flag
+                  const approved = true;
+
+                  // create token 
+                  market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                        value: price
+                  });
+
+                  // get tokenURI
+                  const url = await market.tokenURI(1);
+                  // check
+                  expect(url).to.eql(BASE_URL);
             });
 
             it("【error pattern】create token test", async function () {
