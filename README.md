@@ -44,3 +44,8 @@ NFTMarket deployed to: 0x149920786500a12dA84185df4B4aAABe975Df5f8
 ```zsh
 cd frontend && yarn dev
 ```
+
+### 参考文献
+
+1. [jsmasterypro-nft-marketplace](https://gitfront.io/r/user-6930330/yQ8XwQZYNAat/jsmasterypro-nft-marketplace/)
+2. [ERC721: transfer caller is not owner nor approved](https://stackoverflow.com/questions/69302320/erc721-transfer-caller-is-not-owner-nor-approved)

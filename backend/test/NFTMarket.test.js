@@ -16,7 +16,7 @@ describe('NFTMarketplace', function () {
        */
       async function deployContract() {
             const [owner, otherAccount] = await ethers.getSigners();
-
+            // コントララクトをデプロイする。
             const NFTMarketplace = await ethers.getContractFactory('NFTMarketplace');
             const market = await NFTMarketplace.deploy();
             
@@ -95,15 +95,82 @@ describe('NFTMarketplace', function () {
       describe("create token", function () {
             it("create token test", async function () {
                   // コントラクトをデプロイ
-                  const { market, owner} = await loadFixture(deployContract);
+                  const { market, owner, otherAccount} = await loadFixture(deployContract);
                   // price
                   const price = web3.utils.toWei('0.025');
+                  // approved flag
+                  const approved = true;
                   // create token
-                  const id = await market.createToken(BASE_URL, price, owner.getAddress(), true, {
+                  const id = await market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
                         value: price
                   });
+
+                  // get market items 
+                  const items = await market.fetchMarketItems();
                   // check
-                  expect(id).to.eql(1);
+                  expect(items.length).to.eql(1);
+            });
+
+            it("create 10 tokens test", async function () {
+                  // コントラクトをデプロイ
+                  const { market, owner, otherAccount} = await loadFixture(deployContract);
+                  // price
+                  const price = web3.utils.toWei('0.025');
+                  // approved flag
+                  const approved = true;
+                  
+                  for(var i = 0; i < 10; i++) {
+                        // create token ✖️ 10
+                        const id = await market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                              value: price
+                        });
+                  }
+
+                  // get market items 
+                  const items = await market.fetchMarketItems();
+                  // check
+                  expect(items.length).to.eql(10);
+            });
+      });
+
+      /**
+       * buy NFT 
+       */
+      describe("buy NFT", function () {
+            it("create token test", async function () {
+                  // コントラクトをデプロイ
+                  const { market, owner, otherAccount} = await loadFixture(deployContract);
+
+                  // price
+                  const price = web3.utils.toWei('0.025');
+                  // approved flag
+                  const approved = true;
+                  // create token
+                  const id = await market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                        value: price
+                  });
+
+                  // get market items 
+                  var items = await market.fetchMarketItems();
+                  // get otheraccount's NFT
+                  var nfts = await market.connect(otherAccount).fetchMyNFTs();
+
+                  // check
+                  expect(items.length).to.eql(1);
+                  expect(nfts.length).to.eql(0);
+
+                  // buy NFT
+                  await market.connect(otherAccount).createMarketSale(1, {
+                        value: price
+                  });
+
+                  items = await market.fetchMarketItems();
+                  // get otheraccount's NFT
+                  nfts = await market.connect(otherAccount).fetchMyNFTs();
+
+                  // check
+                  expect(items.length).to.eql(0);
+                  expect(nfts.length).to.eql(1);
             });
       });
 });

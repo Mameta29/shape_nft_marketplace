@@ -55,15 +55,18 @@ contract NFTMarketplace is ERC721URIStorage {
     // setApprovalForAll実装のためParamにoperatorとapprovedを追加
     // mintの段階ではapprovedはfalce
     /* NFTをミントしてマーケットプレイス上に表示 */
-    function createToken(string memory tokenURI, uint256 price, address operator, bool approved)
-        public
-        payable
-        returns (uint256)
-    {
+    function createToken(
+        string memory tokenURI,
+        uint256 price,
+        address operator,
+        bool approved
+    ) public payable returns (uint256) {
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current();
 
-        _mint(msg.sender, newTokenId);
+        // _mint(msg.sender, newTokenId);
+        _mint(address(this), newTokenId);
+        // ToeknURIをセット
         _setTokenURI(newTokenId, tokenURI);
         // setApprovalForAll実装のためParamにoperatorとapprovedを追加
         createMarketItem(newTokenId, price, operator, approved);
@@ -73,7 +76,12 @@ contract NFTMarketplace is ERC721URIStorage {
     // Paramにoperatorとapprovedを追加し
     // setApprovalForAllを実装
     // リストする際はapproved はtrueになる
-    function createMarketItem(uint256 tokenId, uint256 price, address operator, bool approved) private {
+    function createMarketItem(
+        uint256 tokenId,
+        uint256 price,
+        address operator,
+        bool approved
+    ) private {
         require(price > 0, "Price must be at least 1 wei");
         require(
             msg.value == listingPrice,
@@ -82,9 +90,9 @@ contract NFTMarketplace is ERC721URIStorage {
 
         idToMarketItem[tokenId] = MarketItem(
             tokenId,
-            payable(msg.sender),  // setter
+            payable(msg.sender), // setter
             //setApprovalForAll追記によりownerは address(this) ではなくsellerのまま
-            payable(msg.sender),  // owner
+            payable(msg.sender), // owner
             // payable(address(this)),
             price,
             false
@@ -92,13 +100,14 @@ contract NFTMarketplace is ERC721URIStorage {
 
         // setApprovalForAll追記しtransferをコメントアウト
         setApprovalForAll(operator, approved);
+        // setApprovalForAll(address(this), approved);
         // _transfer(msg.sender, address(this), tokenId);
 
         emit MarketItemCreated(
             tokenId,
-            msg.sender,  // seller
+            msg.sender, // seller
             //setApprovalForAll追記によりownerはaddress(this)ではなくsellerのまま
-            msg.sender,  // owner
+            msg.sender, // owner
             // address(this),
             price,
             false
@@ -129,15 +138,22 @@ contract NFTMarketplace is ERC721URIStorage {
     /* NFTの購入 */
     /* 当事者間のNFT所有権と資金を移転する */
     function createMarketSale(uint256 tokenId) public payable {
+        // 金額を取得する。
         uint256 price = idToMarketItem[tokenId].price;
+        // 金額と送金されたETHが等しいかチェックする。
         require(
             msg.value == price,
             "Please submit the asking price in order to complete the purchase"
         );
+        // owner を上書き
         idToMarketItem[tokenId].owner = payable(msg.sender);
+        // soldフラグを更新
         idToMarketItem[tokenId].sold = true;
+        // sellerをゼロアドレスに設定。
         idToMarketItem[tokenId].seller = payable(address(0));
+
         _itemsSold.increment();
+        // NFTを移転する。
         _transfer(address(this), msg.sender, tokenId);
         payable(owner).transfer(listingPrice);
         payable(idToMarketItem[tokenId].seller).transfer(msg.value);

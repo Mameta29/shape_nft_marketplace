@@ -1,7 +1,7 @@
+import axios from 'axios';
+import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
-import axios from 'axios';
 
 import { MarketAddress, MarketAddressABI } from './constants';
 
@@ -99,6 +99,7 @@ export const NFTProvider = ({ children }) => {
     const contract = fetchContract(signer);
     const listingPrice = await contract.getListingPrice();
 
+    /* resellは、使用しない予定なのでコメントアウト
     const transaction = !isReselling
       ? await contract.createToken(url, price, {
         value: listingPrice.toString(),
@@ -106,6 +107,12 @@ export const NFTProvider = ({ children }) => {
       : await contract.resellToken(id, price, {
         value: listingPrice.toString(),
       });
+    */
+
+    // createToken
+    const transaction = await contract.createToken(url, price, {
+      value: listingPrice.toString(),
+    });
 
     setIsLoadingNFT(true);
     await transaction.wait();
