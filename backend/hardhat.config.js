@@ -22,6 +22,10 @@ module.exports = {
       url: ALCHEMY_GOERLI_URL,
       accounts: [`0x${PRIVATE_KEY}`],
     },
+    sepolia: {     
+      url: "https://rpc.sepolia.org",      
+      accounts: [`0x${PRIVATE_KEY}`],   
+    },
     mumbai: {
       url: ALCHEMY_MUMBAI_URL,
       accounts: [`0x${PRIVATE_KEY}`],
