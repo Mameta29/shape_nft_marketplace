@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import { NFTContext } from '../context/NFTContext';
 import { Loader, NFTCard } from '../components';
 
+// 作成したNFTまたは購入したNFTを表示する一覧ページ
 const CreatorDashboard = () => {
   const { fetchMyNFTsOrCreatedNFTs } = useContext(NFTContext);
   const [nfts, setNfts] = useState([]);
@@ -16,6 +17,7 @@ const CreatorDashboard = () => {
       });
   }, []);
 
+  // ローディング中はローディング画像表示
   if (isLoading) {
     return (
       <div className="flexStart min-h-screen">
@@ -24,6 +26,7 @@ const CreatorDashboard = () => {
     );
   }
 
+  // NFTがなければ" "No NFTs Listed for Sale" と表示
   if (!isLoading && nfts.length === 0) {
     return (
       <div className="flexCenter sm:p-4 p-16 min-h-screen">
@@ -34,6 +37,7 @@ const CreatorDashboard = () => {
     );
   }
 
+  // リストされたNFTをカードに当てはめて表示
   return (
     <div className="flex justify-center sm:px-4 p-12 min-h-screen">
       <div className="w-full minmd:w-4/5">

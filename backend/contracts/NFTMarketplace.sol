@@ -107,24 +107,24 @@ contract NFTMarketplace is ERC721URIStorage {
 
     // 買ったNFTは2字流通でしか売りに出さない。
     // SBT使用予定なのでresellToken関数は一旦保留
-    // /* 購入したNFTの売り出し */
-    // function resellToken(uint256 tokenId, uint256 price) public payable {
-    //     require(
-    //         idToMarketItem[tokenId].owner == msg.sender,
-    //         "Only item owner can perform this operation"
-    //     );
-    //     require(
-    //         msg.value == listingPrice,
-    //         "Price must be equal to listing price"
-    //     );
-    //     idToMarketItem[tokenId].sold = false;
-    //     idToMarketItem[tokenId].price = price;
-    //     idToMarketItem[tokenId].seller = payable(msg.sender);
-    //     idToMarketItem[tokenId].owner = payable(address(this));
-    //     _itemsSold.decrement();
+    /* 購入したNFTの売り出し */
+    function resellToken(uint256 tokenId, uint256 price) public payable {
+        require(
+            idToMarketItem[tokenId].owner == msg.sender,
+            "Only item owner can perform this operation"
+        );
+        require(
+            msg.value == listingPrice,
+            "Price must be equal to listing price"
+        );
+        idToMarketItem[tokenId].sold = false;
+        idToMarketItem[tokenId].price = price;
+        idToMarketItem[tokenId].seller = payable(msg.sender);
+        idToMarketItem[tokenId].owner = payable(address(this));
+        _itemsSold.decrement();
 
-    //     _transfer(msg.sender, address(this), tokenId);
-    // }
+        _transfer(msg.sender, address(this), tokenId);
+    }
 
     /* NFTの購入 */
     /* 当事者間のNFT所有権と資金を移転する */

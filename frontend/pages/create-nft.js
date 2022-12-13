@@ -60,6 +60,7 @@ const CreateItem = () => {
       postData.append('file', file);
       postData.append('pinataOptions', '{"cidVersion": 1}');
       postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"company": "nearHotel"}}');
+      // pinataにアップロード
       const res = await axios.post(
         // APIのURL
         `${baseAPIUrl}/pinning/pinFileToIPFS`,
@@ -118,6 +119,7 @@ const CreateItem = () => {
   });
   const router = useRouter();
 
+  // NFTの名前、説明、画像などをNFTとしてIPFSにアップロード
   const createMarket = async () => {
     const { name, description, price } = formInput;
     if (!name || !description || !price || !fileUrl) return;

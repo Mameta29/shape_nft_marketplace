@@ -1,0 +1,22 @@
+{
+  "scss.format.preserveNewLines": true,
+  "less.format.preserveNewLines": true,
+  "css.format.preserveNewLines": true,
+  "html.format.preserveNewLines": true,
+  "debug.showInlineBreakpointCandidates": true,
+  "editor.formatOnSave": false,
+  // ESLint Autofix on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+
+  "eslint.workingDirectories": [
+    "./client", 
+    "./server"
+  ],
+
+  // Show Git folder
+  "files.exclude": {
+    "**/.git": false,
+  }
+}
