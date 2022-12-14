@@ -57,9 +57,7 @@ contract NFTMarketplace is ERC721URIStorage {
     /* NFTをミントしてマーケットプレイス上に表示 */
     function createToken(
         string memory tokenURI,
-        uint256 price,
-        address operator,
-        bool approved
+        uint256 price
     ) public payable returns (uint256) {
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current();
@@ -69,7 +67,7 @@ contract NFTMarketplace is ERC721URIStorage {
         // ToeknURIをセット
         _setTokenURI(newTokenId, tokenURI);
         // setApprovalForAll実装のためParamにoperatorとapprovedを追加
-        createMarketItem(newTokenId, price, operator, approved);
+        createMarketItem(newTokenId, price);
         return newTokenId;
     }
 
@@ -78,9 +76,7 @@ contract NFTMarketplace is ERC721URIStorage {
     // リストする際はapproved はtrueになる
     function createMarketItem(
         uint256 tokenId,
-        uint256 price,
-        address operator,
-        bool approved
+        uint256 price
     ) private {
         require(price > 0, "Price must be at least 1 wei");
         require(
@@ -99,7 +95,7 @@ contract NFTMarketplace is ERC721URIStorage {
         );
 
         // setApprovalForAll追記しtransferをコメントアウト
-        setApprovalForAll(operator, approved);
+        // setApprovalForAll(operator, approved);
         // setApprovalForAll(address(this), approved);
         // _transfer(msg.sender, address(this), tokenId);
 
