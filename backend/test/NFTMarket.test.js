@@ -114,7 +114,7 @@ describe('NFTMarketplace', function () {
 
                   // create token & check emit event
                   await expect(
-                        market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                        market.createToken(BASE_URL, price, {
                               value: price
                         })
                   ).to.emit(market, "MarketItemCreated");
@@ -134,7 +134,7 @@ describe('NFTMarketplace', function () {
                   const approved = true;
 
                   // create token 
-                  market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                  market.createToken(BASE_URL, price, {
                         value: price
                   });
 
@@ -153,7 +153,7 @@ describe('NFTMarketplace', function () {
                   const approved = true;
                   // create token
                   await truffleAssert.reverts(
-                        market.createToken(BASE_URL, price, otherAccount.getAddress(), approved)  
+                        market.createToken(BASE_URL, price)  
                   );
             });
 
@@ -166,7 +166,7 @@ describe('NFTMarketplace', function () {
                   const approved = true;
                   // create token
                   await truffleAssert.reverts(
-                        market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                        market.createToken(BASE_URL, price, {
                               value: web3.utils.toWei('0.024')
                         })  
                   );
@@ -182,7 +182,7 @@ describe('NFTMarketplace', function () {
                   
                   for(var i = 0; i < 10; i++) {
                         // create token ✖️ 10
-                        const id = await market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                        const id = await market.createToken(BASE_URL, price, {
                               value: price
                         });
                   }
@@ -207,7 +207,7 @@ describe('NFTMarketplace', function () {
                   // approved flag
                   const approved = true;
                   // create token
-                  const id = await market.createToken(BASE_URL, price, otherAccount.getAddress(), approved, {
+                  const id = await market.createToken(BASE_URL, price, {
                         value: price
                   });
 
@@ -243,7 +243,7 @@ describe('NFTMarketplace', function () {
                   // approved flag
                   const approved = true;
                   // create token
-                  const id = await market.connect(otherAccount).createToken(BASE_URL, price, owner.getAddress(), approved, {
+                  const id = await market.connect(otherAccount).createToken(BASE_URL, price, {
                         value: price
                   });
       
