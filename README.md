@@ -36,7 +36,7 @@ result example
 
 ```zsh
 =================================================================
-NFTMarket deployed to: 0xAa363921A48Eac63F802C57658CdEde768B3DAe1
+NFTMarket deployed to:  0xA1a196ee107067Bf34F69fadb4997Ab2D5f66827
 =================================================================
 ```
 
@@ -54,7 +54,7 @@ cd frontend && yarn dev
 | Shibuya Network   | [0](https://blockscout.com/shibuya/address/) |
 | Shiden            | [0](https://blockscout.com/shiden/address/)  |
 | Avalanche testnet | [0](https://testnet.snowtrace.io/address/)   |
-| goerli            | [0](https://goerli.etherscan.io/address/)    |
+| goerli            | [0xA1a196ee107067Bf34F69fadb4997Ab2D5f66827](https://goerli.etherscan.io/address/0xA1a196ee107067Bf34F69fadb4997Ab2D5f66827)    |
 | sepolia           | [0](https://sepolia.etherscan.io/address/)   |
 | BSC Testnet       | [0](https://testnet.bscscan.com/address/)    |
 | Astar Network     | [0](https://blockscout.com/astar/address/)   |
@@ -65,3 +65,7 @@ cd frontend && yarn dev
 2. [ERC721: transfer caller is not owner nor approved](https://stackoverflow.com/questions/69302320/erc721-transfer-caller-is-not-owner-nor-approved)
 3. [sepolia faucet](https://sepoliafaucet.net/)
 4. [sepolia faucet2](https://faucet-sepolia.rockx.com/)
+
+### 開発メモ
+1. NFT作成の際に日本語ではなく英語入力にする
+👉postの際に日本語の情報をヘッダに入れることでエラーとなる。

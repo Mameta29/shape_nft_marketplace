@@ -36,8 +36,9 @@ import images from '../assets';
 // console.log(`client : ${client}`);
 
 // pinataAPIでgatawayを使用しIPFSと接続するため各種値をセットする
-const pinataAapiKey = '4c3bba8344657a640936';
-const pinataApiSecret = '1a1a36e661bc408659aca1ad0527415e9096ba1f10d7e78a13e5c3a522d3f770';
+const pinataApiKey = 'd14a91ce9e71974a5b4a';
+const pinataApiSecret = 'e582916c77e4df2fc17837c7f98edec0edc4c3b7fbc17e68aefeb8ab36d9944f';
+const pinataJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIxNTBmMGM4MS04MDhkLTRhMTctYjJjYS04Zjg1YTEwODNkYjEiLCJlbWFpbCI6ImZjLmtpa2thd2FAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6ImQxNGE5MWNlOWU3MTk3NGE1YjRhIiwic2NvcGVkS2V5U2VjcmV0IjoiZTU4MjkxNmM3N2U0ZGYyZmMxNzgzN2M3Zjk4ZWRlYzBlZGM0YzNiN2ZiYzE3ZTY4YWVmZWI4YWIzNmQ5OTQ0ZiIsImlhdCI6MTY3MDk5Mzg4Nn0.wSC9fcrTChwvT1jPecYQGQN0AqDMOxNzZNER553UXWI';
 // APIにアクセスするためのベースとなるURL
 const baseAPIUrl = 'https://api.pinata.cloud';
 
@@ -60,6 +61,7 @@ const CreateItem = () => {
       postData.append('file', file);
       postData.append('pinataOptions', '{"cidVersion": 1}');
       postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"company": "nearHotel"}}');
+      console.log(`"postData: " ${postData}`);
       // pinataにアップロード
       const res = await axios.post(
         // APIのURL
@@ -70,7 +72,7 @@ const CreateItem = () => {
         {
           headers: {
             accept: 'application/json',
-            pinata_api_key: `${pinataAapiKey}`,
+            pinata_api_key: `${pinataApiKey}`,
             pinata_secret_api_key: `${pinataApiSecret}`,
             'Content-Type': `multipart/form-data; boundary=${postData}`,
           },
@@ -125,8 +127,8 @@ const CreateItem = () => {
     if (!name || !description || !price || !fileUrl) return;
     // console.log(name);
     /* first, upload to IPFS */
-    const data = JSON.stringify({ name, description, image: fileUrl });
-    console.log(data);
+    // const data = JSON.stringify({ name, description, image: fileUrl });
+    // console.log(`"data: " ${data}`);
     try {
       // // infura to intract IPFS but not using now
       // const added = await client.add(data);
@@ -134,26 +136,66 @@ const CreateItem = () => {
 
       // using Pinata to intract IPFS
       // FormDataオブジェクトを生成
-      const postData = new FormData();
-      postData.append('file', data);
-      postData.append('pinataOptions', '{"cidVersion": 1}');
-      postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"test": "marketplace"}}');
+      // const postData = new FormData();
+      // postData.append('file', data);
+      // postData.append('pinataOptions', '{"cidVersion": 1}');
+      // postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"test": "marketplace"}}');
       // console.log(data);
-      const res = await axios.post(
-        // APIのURL
-        `${baseAPIUrl}/pinning/pinFileToIPFS`,
-        // リクエストパラメータ
-        postData,
-        // ヘッダー情報
-        {
-          headers: {
-            accept: 'application/json',
-            pinata_api_key: `${pinataAapiKey}`,
-            pinata_secret_api_key: `${pinataApiSecret}`,
-            'Content-Type': `multipart/form-data; boundary=${postData}`,
+      console.log('params: の前');
+      // const params = new URLSearchParams();
+      // params.append('name', name);
+      // params.append('description', description);
+      // params.append('image', fileUrl);
+      // console.log(`"params: " ${params}`);
+      const data = JSON.stringify({
+        pinataOptions: {
+          cidVersion: 1,
+        },
+        pinataMetadata: {
+          name: 'testing',
+          keyvalues: {
+            customKey: 'customValue',
+            customKey2: 'customValue2',
           },
         },
-      );
+        pinataContent: {
+          name,
+          description,
+          image: fileUrl,
+        },
+      });
+
+      const config = {
+        method: 'post',
+        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+        maxContentLength: 'Infinity',
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: pinataJWT,
+          pinata_api_key: '4c3bba8344657a640936',
+          pinata_secret_api_key: '1a1a36e661bc408659aca1ad0527415e9096ba1f10d7e78a13e5c3a522d3f770',
+        },
+        data,
+      };
+
+      const res = await axios(config);
+
+      console.log(res.data);
+      // const res = await axios.post(
+      //   // APIのURL
+      //   'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      //   // リクエストパラメータ
+      //   data,
+      //   // ヘッダー情報
+      //   {
+      //     headers: {
+      //       accept: 'application/jason',
+      //       pinata_api_key: '4c3bba8344657a640936',
+      //       pinata_secret_api_key: '1a1a36e661bc408659aca1ad0527415e9096ba1f10d7e78a13e5c3a522d3f770',
+      //       'Content-Type': `application/json; boundary=${data}`,
+      //     },
+      //   },
+      // );
       // CIDを取得
       console.log('CID:', res.data.IpfsHash);
       const url = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;

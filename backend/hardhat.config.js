@@ -26,10 +26,10 @@ module.exports = {
       url: "https://rpc.sepolia.org",      
       accounts: [`0x${PRIVATE_KEY}`],   
     },
-    mumbai: {
-      url: ALCHEMY_MUMBAI_URL,
-      accounts: [`0x${PRIVATE_KEY}`],
-    },
+    // mumbai: {
+    //   url: ALCHEMY_MUMBAI_URL,
+    //   accounts: [`0x${PRIVATE_KEY}`],
+    // },
     fuji: {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
       gasPrice: 225000000000,
