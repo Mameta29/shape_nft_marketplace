@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef, useContext } from 'react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import { useContext, useEffect, useRef, useState } from 'react';
 
-import { CreatorCard, NFTCard, Loader, SearchBar, Banner } from '../components';
+import images from '../assets';
+import { Banner, CreatorCard, Loader, NFTCard, SearchBar } from '../components';
 import { NFTContext } from '../context/NFTContext';
 import { getCreators } from '../utils/getTopCreators';
-import { shortenAddress } from '../utils/shortenAddress';
-import images from '../assets';
 import { makeid } from '../utils/makeId';
+import { shortenAddress } from '../utils/shortenAddress';
 
 const Home = () => {
   const { fetchNFTs } = useContext(NFTContext);

@@ -139,7 +139,7 @@ describe('NFTMarketplace', function () {
                   });
 
                   // get tokenURI
-                  const url = await market.tokenURI(1);
+                  const url = await market.tokenURI(0);
                   // check
                   expect(url).to.eql(BASE_URL);
             });
@@ -221,7 +221,7 @@ describe('NFTMarketplace', function () {
                   expect(nfts.length).to.eql(0);
 
                   // buy NFT
-                  await market.connect(otherAccount).createMarketSale(1, {
+                  await market.connect(otherAccount).createMarketSale(0, {
                         value: price
                   });
 
@@ -231,7 +231,7 @@ describe('NFTMarketplace', function () {
 
                   // check
                   expect(items.length).to.eql(0);
-                  expect(nfts.length).to.eql(1);
+                  expect(nfts.length).to.eql(0);
             });
 
             it("【pattern2】create token test", async function () {
@@ -257,7 +257,7 @@ describe('NFTMarketplace', function () {
                   expect(nfts.length).to.eql(0);
       
                   // buy NFT
-                  await market.connect(owner).createMarketSale(1, {
+                  await market.connect(owner).createMarketSale(0, {
                         value: price
                   });
       
@@ -267,7 +267,7 @@ describe('NFTMarketplace', function () {
       
                   // check
                   expect(items.length).to.eql(0);
-                  expect(nfts.length).to.eql(1);
+                  expect(nfts.length).to.eql(0);
             });
       });
 });

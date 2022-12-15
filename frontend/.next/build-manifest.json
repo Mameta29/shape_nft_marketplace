@@ -30,15 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/created-nfts": [
+    "/nft-details": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/created-nfts.js"
-    ],
-    "/my-nfts": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/my-nfts.js"
+      "static/chunks/pages/nft-details.js"
     ]
   },
   "ampFirstPages": []

@@ -26,9 +26,11 @@ export const NFTProvider = ({ children }) => {
     const items = await Promise.all(
       data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
         const tokenURI = await contract.tokenURI(tokenId);
+        // get token metadata
         const {
           data: { image, name, description },
         } = await axios.get(tokenURI);
+        // format
         const price = ethers.utils.formatUnits(
           unformattedPrice.toString(),
           'ether',
@@ -132,6 +134,7 @@ export const NFTProvider = ({ children }) => {
     const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
     const transaction = await contract.createMarketSale(nft.tokenId, {
       value: price,
+      gasLimit: 3000000,
     });
     setIsLoadingNFT(true);
     await transaction.wait();
