@@ -1,11 +1,15 @@
-import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
+import { useContext, useEffect, useState } from 'react';
 
+import images from '../assets';
+import { Banner, Loader, NFTCard, SearchBar } from '../components';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
-import { Loader, NFTCard, SearchBar, Banner } from '../components';
-import images from '../assets';
 
+/**
+ * MyNFTs component
+ * @returns
+ */
 const MyNFTs = () => {
   const { fetchMyNFTsOrCreatedNFTs, currentAccount } = useContext(NFTContext);
   const [nfts, setNfts] = useState([]);
@@ -40,6 +44,10 @@ const MyNFTs = () => {
     }
   }, [activeSelect]);
 
+  /**
+   * onHandleSearch function
+   * @param {*} value form data
+   */
   const onHandleSearch = (value) => {
     const filteredNfts = nfts.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase()));
 
@@ -50,12 +58,16 @@ const MyNFTs = () => {
     }
   };
 
+  /**
+   * onClearSearch function
+   */
   const onClearSearch = () => {
     if (nfts.length && nftsCopy.length) {
       setNfts(nftsCopy);
     }
   };
 
+  // Loader component
   if (isLoading) {
     return (
       <div className="flexStart min-h-screen">

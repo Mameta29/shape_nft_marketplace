@@ -9,6 +9,10 @@ import { getCreators } from '../utils/getTopCreators';
 import { makeid } from '../utils/makeId';
 import { shortenAddress } from '../utils/shortenAddress';
 
+/**
+ * Home Component
+ * @returns
+ */
 const Home = () => {
   const { fetchNFTs } = useContext(NFTContext);
   const [nfts, setNfts] = useState([]);
@@ -49,6 +53,10 @@ const Home = () => {
     }
   }, [activeSelect]);
 
+  /**
+   * onHandleSearch function
+   * @param {*} value form data
+   */
   const onHandleSearch = (value) => {
     const filteredNfts = nfts.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase()));
 
@@ -59,12 +67,19 @@ const Home = () => {
     }
   };
 
+  /**
+   * onClearSearch function
+   */
   const onClearSearch = () => {
     if (nfts.length && nftsCopy.length) {
       setNfts(nftsCopy);
     }
   };
 
+  /**
+   * handleScroll function
+   * @param {*} direction
+   */
   const handleScroll = (direction) => {
     const { current } = scrollRef;
 
@@ -77,7 +92,10 @@ const Home = () => {
     }
   };
 
-  // check if scrollRef container is overfilling its parentRef container
+  /**
+   * check if scrollRef container is overfilling its parentRef container
+   * @returns
+   */
   const isScrollable = () => {
     const { current } = scrollRef;
     const { current: parent } = parentRef;
@@ -98,6 +116,7 @@ const Home = () => {
     };
   });
 
+  // call getCreators function
   const creators = getCreators(nfts);
 
   return (

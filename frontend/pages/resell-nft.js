@@ -1,10 +1,14 @@
-import { useEffect, useState, useContext } from 'react';
-import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
 
-import { NFTContext } from '../context/NFTContext';
 import { Button, Input, Loader } from '../components';
+import { NFTContext } from '../context/NFTContext';
 
+/**
+ * ResellNFT component
+ * @returns
+ */
 const ResellNFT = () => {
   const { createSale, isLoadingNFT } = useContext(NFTContext);
   const [price, setPrice] = useState('');
@@ -12,6 +16,10 @@ const ResellNFT = () => {
   const router = useRouter();
   const { id, tokenURI } = router.query;
 
+  /**
+   * fetchNFT function
+   * @returns
+   */
   const fetchNFT = async () => {
     if (!tokenURI) return;
 
@@ -25,12 +33,16 @@ const ResellNFT = () => {
     fetchNFT();
   }, [id]);
 
+  /**
+   * resell function
+   */
   const resell = async () => {
     await createSale(tokenURI, price, true, id);
 
     router.push('/');
   };
 
+  // Loader component
   if (isLoadingNFT) {
     return (
       <div className="flexCenter" style={{ height: '51vh' }}>

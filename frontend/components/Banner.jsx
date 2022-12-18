@@ -1,3 +1,8 @@
+/**
+ * Banner component
+ * @param {*} param0 name, childStyles, parentStyle
+ * @returns
+ */
 const Banner = ({ name, childStyles, parentStyle }) => (
   <div
     className={`relative w-full flex items-center z-0 overflow-hidden nft-gradient ${parentStyle}`}

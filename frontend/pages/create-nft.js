@@ -9,67 +9,45 @@ import FormData from 'form-data';
 import images from '../assets';
 import { Button, Input, Loader } from '../components';
 import { NFTContext } from '../context/NFTContext';
-// infuraでipfs接続のために作成するclientインスタンスに使用
-// const ipfsClient = require('ipfs-http-client');
 
-// // projectIdとprojectSecretから認証情報作成
-// const projectId = '2IYwC3nHSHhjw8BbTcd6JZJhwKN';
-// const projectSecret = 'b251f6eae8f55ee11c11f41111cffe59';
-// const auth = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString('base64')}`;
-
-// .envから読み込んだprojectIdとprojectSecretから認証情報作成
-// const {
-//   NEXT_PUBLIC_PROJECT_ID,
-//   NEXT_PUBLIC_PROJECT_SECRET,
-// } = process.env;
-// const auth = `Basic ${Buffer.from(`${process.env.NEXT_PUBLIC_PROJECT_ID}:${process.env.NEXT_PUBLIC_PROJECT_SECRET}`).toString('base64')}`;
-
-// // infuraを使用しclientインスタンス作成
-// const client = ipfsClient.create({
-//   host: 'infura-ipfs.io',
-//   port: 5001,
-//   protocol: 'https',
-//   headers: {
-//     authorization: auth,
-//   },
-// });
-// console.log(`client : ${client}`);
-
-// pinataAPIでgatawayを使用しIPFSと接続するため各種値をセットする
-const pinataApiKey = 'd14a91ce9e71974a5b4a';
-const pinataApiSecret = 'e582916c77e4df2fc17837c7f98edec0edc4c3b7fbc17e68aefeb8ab36d9944f';
-const pinataJWT = process.env.NEXT_PUBLIC_JWD;
-// APIにアクセスするためのベースとなるURL
+// baseURI for pinata API
 const baseAPIUrl = 'https://api.pinata.cloud';
 
+/**
+ * CreateItem component
+ * @returns component
+ */
 const CreateItem = () => {
   const { createSale, isLoadingNFT } = useContext(NFTContext);
   const [fileUrl, setFileUrl] = useState(null);
   const [postedFile, SetPostedFile] = useState(null);
   const { theme } = useTheme();
+
   console.log(`fileUrl : ${fileUrl}`);
 
-  // 画像をアップロードする時にipfsのgatawayと接続
+  const pinataApiKey = process.env.NEXT_PUBLIC_PROJECT_ID;
+  const pinataApiSecret = process.env.NEXT_PUBLIC_PROJECT_SECRET;
+
+  /**
+   * uploadToInfura function
+   * @param {*} file file data
+   */
   const uploadToInfura = async (file) => {
     try {
-      // infuraを使用
-      // const added = await client.add(file);
-      // const url = `https://infura-ipfs.io/${added.path}`;
-
-      // pinataのAPIによりIPFSと接続
-      // APIを使って送信するリクエストパラメータを作成する。
+      // create request params
       const postData = new FormData();
       postData.append('file', file);
       postData.append('pinataOptions', '{"cidVersion": 1}');
       postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"company": "nearHotel"}}');
       console.log(`"postData: " ${postData}`);
-      // pinataにアップロード
+
+      // upload to pinata
       const res = await axios.post(
         // APIのURL
         `${baseAPIUrl}/pinning/pinFileToIPFS`,
-        // リクエストパラメータ
+        // req params
         postData,
-        // ヘッダー情報
+        // header
         {
           headers: {
             accept: 'application/json',
@@ -79,7 +57,7 @@ const CreateItem = () => {
           },
         },
       );
-      // CIDを取得
+
       console.log('CID:', res.data.IpfsHash);
       const url = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
       console.log(`url : ${url}`);
@@ -91,6 +69,9 @@ const CreateItem = () => {
     }
   };
 
+  /**
+   * onDrop callback function
+   */
   const onDrop = useCallback(async (acceptedFile) => {
     await uploadToInfura(acceptedFile[0]);
   }, []);
@@ -123,33 +104,29 @@ const CreateItem = () => {
   });
   const router = useRouter();
 
-  // NFTの名前、説明、画像などをNFTとしてIPFSにアップロード
+  /**
+   * createMarket function
+   */
   const createMarket = async () => {
+    // get form datas
     const { name, description, price } = formInput;
     if (!name || !description || !price || !fileUrl) return;
-    // console.log(name);
-    /* first, upload to IPFS */
-    // const data = JSON.stringify({ name, description, image: fileUrl });
-    // console.log(`"data: " ${data}`);
-    try {
-      // // infura to intract IPFS but not using now
-      // const added = await client.add(data);
-      // const url = `https://ipfs.infura.io/ipfs/${added.path}`;
 
-      // pinataのAPIによりIPFSと接続
-      // APIを使って送信するリクエストパラメータを作成する。
+    try {
+      // create req param datas
       const postData = new FormData();
       postData.append('file', postedFile);
       postData.append('pinataOptions', '{"cidVersion": 1}');
       postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"company": "nearHotel"}}');
       console.log(`"postData: " ${postData}`);
-      // pinataにアップロード
+
+      // upload to pinata
       const res = await axios.post(
-        // APIのURL
+        // API
         `${baseAPIUrl}/pinning/pinFileToIPFS`,
-        // リクエストパラメータ
+        // req param data
         postData,
-        // ヘッダー情報
+        // header
         {
           headers: {
             accept: 'application/json',
@@ -161,14 +138,12 @@ const CreateItem = () => {
       );
 
       console.log(res.data);
-
-      // CIDを取得
       console.log('CID:', res.data.IpfsHash);
       const url = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
       console.log(`url : ${url}`);
 
-      /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
-      // console.log(url, formInput.price);
+      /* after file is uploaded to IPFS, pass the URL to save it on Blockchain */
+      // call createSale fuction
       await createSale(url, formInput.price);
       router.push('/');
     } catch (error) {

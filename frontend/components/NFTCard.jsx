@@ -6,6 +6,11 @@ import images from '../assets';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 
+/**
+ * NFTCard
+ * @param {*} param0 nft, onProfilePage
+ * @returns
+ */
 const NFTCard = ({ nft, onProfilePage }) => {
   const { nftCurrency } = useContext(NFTContext);
 

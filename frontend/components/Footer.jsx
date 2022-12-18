@@ -1,14 +1,20 @@
-import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 
 import images from '../assets';
 import Button from './Button';
 
+/**
+ * FooterLinks component
+ * @param {*} param0 heading, items, extraClasses
+ * @returns
+ */
 const FooterLinks = ({ heading, items, extraClasses }) => (
   <div className={`flex-1 justify-start items-start ${extraClasses}`}>
     <h3 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl mb-10">
       {heading}
     </h3>
+    {/* items */}
     {items.map((item, index) => (
       <p
         key={item + index}
@@ -20,6 +26,10 @@ const FooterLinks = ({ heading, items, extraClasses }) => (
   </div>
 );
 
+/**
+ * Footer component
+ * @returns
+ */
 const Footer = () => {
   const { theme } = useTheme();
 

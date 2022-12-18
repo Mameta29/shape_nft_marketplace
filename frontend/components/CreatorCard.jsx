@@ -1,9 +1,14 @@
-import { useContext } from 'react';
 import Image from 'next/image';
+import { useContext } from 'react';
 
 import images from '../assets';
 import { NFTContext } from '../context/NFTContext';
 
+/**
+ * CreatorCard component
+ * @param {*} param0 rank, creatorImage, creatorName, creatorEths
+ * @returns
+ */
 const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
   const { nftCurrency } = useContext(NFTContext);
 
