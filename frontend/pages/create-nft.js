@@ -139,6 +139,29 @@ const CreateItem = () => {
         },
       );
 
+      // うまくいかないので別の方法で試してみた
+      // const data = JSON.stringify({
+      //   ipfsPinHash: fileUrl,
+      //   name,
+      //   description,
+      // });
+
+      // const config = {
+      //   method: 'post',
+      //   url: `${baseAPIUrl}/pinning/pinFileToIPFS`,
+      //   headers: {
+      //     accept: 'application/json',
+      //     pinata_api_key: `${pinataApiKey}`,
+      //     pinata_secret_api_key: `${pinataApiSecret}`,
+      //     'Content-Type': `multipart/form-data; boundary=${data}`,
+      //   },
+      //   data,
+      // };
+
+      // const res = await axios(config);
+
+      console.log(res.data);
+
       console.log(res.data);
       console.log('CID:', res.data.IpfsHash);
       const url = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
