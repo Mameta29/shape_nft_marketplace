@@ -27,6 +27,8 @@ const CreateItem = () => {
 
   const pinataApiKey = process.env.NEXT_PUBLIC_PROJECT_ID;
   const pinataApiSecret = process.env.NEXT_PUBLIC_PROJECT_SECRET;
+  console.log(`"pinataApiKey : " ${pinataApiKey}`);
+  console.log(`"pinataApiSecret : " ${pinataApiSecret}`);
 
   /**
    * uploadToInfura function
@@ -39,7 +41,7 @@ const CreateItem = () => {
       postData.append('file', file);
       postData.append('pinataOptions', '{"cidVersion": 1}');
       postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"company": "nearHotel"}}');
-      console.log(`"postData: " ${postData}`);
+      console.log(`"postDataUpload: " ${postData}`);
 
       // upload to pinata
       const res = await axios.post(
@@ -60,7 +62,7 @@ const CreateItem = () => {
 
       console.log('CID:', res.data.IpfsHash);
       const url = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
-      console.log(`url : ${url}`);
+      console.log(`fileUrl : ${url}`);
 
       SetPostedFile(file);
       setFileUrl(url);
@@ -118,7 +120,7 @@ const CreateItem = () => {
       postData.append('file', postedFile);
       postData.append('pinataOptions', '{"cidVersion": 1}');
       postData.append('pinataMetadata', '{"name": "テストname", "keyvalues": {"company": "nearHotel"}}');
-      console.log(`"postData: " ${postData}`);
+      console.log(`"postDataMarket: " ${postData}`);
 
       // upload to pinata
       const res = await axios.post(
@@ -140,7 +142,7 @@ const CreateItem = () => {
       console.log(res.data);
       console.log('CID:', res.data.IpfsHash);
       const url = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
-      console.log(`url : ${url}`);
+      console.log(`nftUrl : ${url}`);
 
       /* after file is uploaded to IPFS, pass the URL to save it on Blockchain */
       // call createSale fuction
