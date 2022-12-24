@@ -36,9 +36,9 @@ import { NFTContext } from '../context/NFTContext';
 // console.log(`client : ${client}`);
 
 // pinataAPIでgatawayを使用しIPFSと接続するため各種値をセットする
-const pinataApiKey = 'd14a91ce9e71974a5b4a';
-const pinataApiSecret = 'e582916c77e4df2fc17837c7f98edec0edc4c3b7fbc17e68aefeb8ab36d9944f';
-const pinataJWT = process.env.NEXT_PUBLIC_JWD;
+const pinataApiKey = '5412d3a4a056323b4660';
+const pinataApiSecret = '3c8435f434caa12f10123a611d77b1855b82cecec9efd55867a8f9c0488eabe1';
+// const pinataJWT = process.env.NEXT_PUBLIC_JWD;
 // APIにアクセスするためのベースとなるURL
 const baseAPIUrl = 'https://api.pinata.cloud';
 

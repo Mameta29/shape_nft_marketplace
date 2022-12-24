@@ -54,7 +54,7 @@ cd frontend && yarn dev
 | Shibuya Network   | [0](https://blockscout.com/shibuya/address/) |
 | Shiden            | [0](https://blockscout.com/shiden/address/)  |
 | Avalanche testnet | [0](https://testnet.snowtrace.io/address/)   |
-| goerli            | [0xA1a196ee107067Bf34F69fadb4997Ab2D5f66827](https://goerli.etherscan.io/address/0xA1a196ee107067Bf34F69fadb4997Ab2D5f66827)    |
+| goerli            | [0x026C6Ec342c34dC1f37e413Cd65f73cBA9B1879D](https://goerli.etherscan.io/address/0x026C6Ec342c34dC1f37e413Cd65f73cBA9B1879D)    |
 | sepolia           | [0](https://sepolia.etherscan.io/address/)   |
 | BSC Testnet       | [0](https://testnet.bscscan.com/address/)    |
 | Astar Network     | [0](https://blockscout.com/astar/address/)   |

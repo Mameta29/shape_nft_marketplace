@@ -121,6 +121,7 @@ describe('NFTMarketplace', function () {
 
                   // get market items 
                   const items = await market.fetchMarketItems();
+                  console.log(`items(createTokenTest) : ${items}`);
                   // check
                   expect(items.length).to.eql(1);
             });

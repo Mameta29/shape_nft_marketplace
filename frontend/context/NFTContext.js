@@ -20,8 +20,12 @@ export const NFTProvider = ({ children }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // const provider = new ethers.providers.JsonRpcProvider('https://eth-goerli.g.alchemy.com/v2/PPq6amF0yaNOJF3LlBoggF5UIzDSgnEe');
     const contract = fetchContract(provider);
+    // コントラクトに値がデプロイされているか確認
+    // const getCode = await provider.getCode('0x026C6Ec342c34dC1f37e413Cd65f73cBA9B1879D');
+    // console.log(getCode);
 
     const data = await contract.fetchMarketItems();
+    console.log(`"toklenId : " ${data}`);
 
     const items = await Promise.all(
       data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
@@ -61,6 +65,7 @@ export const NFTProvider = ({ children }) => {
 
     const contract = fetchContract(signer);
     const data = type === 'fetchItemsListed' ? await contract.fetchItemsListed() : await contract.fetchMyNFTs();
+    console.log(`data(fetchMyNFTsOrCreatedNFTs) : ${data}`);
 
     const items = await Promise.all(
       data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
@@ -89,30 +94,24 @@ export const NFTProvider = ({ children }) => {
     return items;
   };
 
-  const createSale = async (url, formInputPrice) => {
+  const createSale = async (url, formInputPrice, isReselling, id) => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
+    // コントラクト確認
+    const getCode = await provider.getCode('0x026C6Ec342c34dC1f37e413Cd65f73cBA9B1879D');
+    console.log(getCode);
 
     const price = ethers.utils.parseUnits(formInputPrice, 'ether');
     const contract = fetchContract(signer);
     const listingPrice = await contract.getListingPrice();
+    console.log(`listingPeice(NFTContext.js.createSale): ${listingPrice}`);
+    console.log(`id : ${id}`);
 
-    /* resellは、使用しない予定なのでコメントアウト
     const transaction = !isReselling
-      ? await contract.createToken(url, price, {
-        value: listingPrice.toString(),
-      })
-      : await contract.resellToken(id, price, {
-        value: listingPrice.toString(),
-      });
-    */
-
-    // createToken
-    const transaction = await contract.createToken(url, price, {
-      value: listingPrice.toString(),
-    });
+      ? await contract.createToken(url, price, { value: listingPrice.toString() })
+      : await contract.resellToken(id, price, { value: listingPrice.toString() });
 
     setIsLoadingNFT(true);
     await transaction.wait();
