@@ -33,7 +33,7 @@ contract NFTMarketplace is ERC721URIStorage {
       bool sold
     );
 
-    constructor() ERC721("Metaverse Tokens", "METT") {
+    constructor() ERC721("Shape Market", "SHP") {
       owner = payable(msg.sender);
     }
 
@@ -74,7 +74,8 @@ contract NFTMarketplace is ERC721URIStorage {
         false
       );
 
-      _transfer(msg.sender, address(this), tokenId);
+      setApprovalForAll(address(this), true);
+      // _transfer(msg.sender, address(this), tokenId);
       emit MarketItemCreated(
         tokenId,
         msg.sender,
@@ -94,7 +95,8 @@ contract NFTMarketplace is ERC721URIStorage {
       idToMarketItem[tokenId].owner = payable(address(this));
       _itemsSold.decrement();
 
-      _transfer(msg.sender, address(this), tokenId);
+      setApprovalForAll(address(this), true);
+      // _transfer(msg.sender, address(this), tokenId);
     }
 
     /* Creates the sale of a marketplace item */
@@ -104,11 +106,14 @@ contract NFTMarketplace is ERC721URIStorage {
       ) public payable {
       uint price = idToMarketItem[tokenId].price;
       require(msg.value == price, "Please submit the asking price in order to complete the purchase");
+      require(isApprovedForAll(ownerOf(tokenId), address(this)), "The owner has not approved the token id to sell");
+      
+      address oldOwner = ownerOf(tokenId);
       idToMarketItem[tokenId].owner = payable(msg.sender);
       idToMarketItem[tokenId].sold = true;
       idToMarketItem[tokenId].seller = payable(address(0));
       _itemsSold.increment();
-      _transfer(address(this), msg.sender, tokenId);
+      _transfer(oldOwner, msg.sender, tokenId);
       payable(owner).transfer(listingPrice);
       payable(idToMarketItem[tokenId].seller).transfer(msg.value);
     }
