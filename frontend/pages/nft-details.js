@@ -1,12 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
 
+import images from '../assets';
+import { Button, Loader, Modal } from '../components';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
-import { Button, Loader, Modal } from '../components';
-import images from '../assets';
-import styles from '../styles/Scroll.module.css';
 
 // // checkBoxのため追記
 
@@ -21,8 +20,12 @@ import styles from '../styles/Scroll.module.css';
 //   });
 // }
 
-// row-span-3 col-span-3 overflow-y-auto
-// checkBoxのため追記
+/**
+ * ApproveContractCmp component
+ * row-span-3 col-span-3 overflow-y-auto
+ * checkBoxのため追記
+ * @returns
+ */
 const ApproveContractCmp = () => (
   <div className="overflow-y-auto max-h-96">
     <div>
@@ -64,6 +67,9 @@ const ApproveContractCmp = () => (
   </div>
 );
 
+/**
+ * PaymentBodyCmp component
+ */
 const PaymentBodyCmp = ({ nft, nftCurrency }) => (
   <div className="flex flex-col">
     <div className="flexBetween">
@@ -112,6 +118,10 @@ const PaymentBodyCmp = ({ nft, nftCurrency }) => (
   </div>
 );
 
+/**
+ * AssetDetails component
+ * @returns
+ */
 const AssetDetails = () => {
   const { nftCurrency, buyNft, currentAccount, isLoadingNFT } = useContext(NFTContext);
   const [nft, setNft] = useState({
@@ -176,13 +186,19 @@ const AssetDetails = () => {
   //   setCheckContract(!checkContract);
   // }, [checkContract]);
 
-  // checkBoxのため追記
+  /**
+   * approve function
+   * checkBoxのため追記
+   */
   const approve = async () => {
     // await buyNft(nft);
     setApprovalModal(false);
     setPaymentModal(true);
   };
 
+  /**
+   * checkout component
+   */
   const checkout = async () => {
     await buyNft(nft);
     setPaymentModal(false);

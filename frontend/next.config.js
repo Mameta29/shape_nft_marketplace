@@ -8,12 +8,10 @@ module.exports = withEnv();
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['ipfs.infura.io', 'api.pinata.cloud', 'gateway.pinata.cloud'],
+    domains: [
+      'ipfs.infura.io',
+      'api.pinata.cloud',
+      'gateway.pinata.cloud',
+    ],
   },
-  // webpack: (config, { isServer }) => {
-  //   if (!isServer) {
-  //     config.resolve.fallback.fs = false;
-  //   }
-  //   return config;
-  // },
 };

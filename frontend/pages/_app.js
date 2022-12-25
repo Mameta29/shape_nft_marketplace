@@ -1,10 +1,15 @@
-import Script from 'next/script';
 import { ThemeProvider } from 'next-themes';
+import Script from 'next/script';
 
-import { NFTProvider } from '../context/NFTContext';
 import { Footer, Navbar } from '../components';
+import { NFTProvider } from '../context/NFTContext';
 import '../styles/globals.css';
 
+/**
+ * Marketplace component
+ * @param {*} param0 component & pageProps
+ * @returns NFTProvider component
+ */
 const Marketplace = ({ Component, pageProps }) => (
   <NFTProvider>
     <ThemeProvider attribute="class">

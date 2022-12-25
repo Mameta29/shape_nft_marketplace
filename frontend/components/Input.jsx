@@ -2,6 +2,11 @@ import { useContext } from 'react';
 
 import { NFTContext } from '../context/NFTContext';
 
+/**
+ * Input component
+ * @param {*} param0 inputType, title, placeholder, handleClick
+ * @returns
+ */
 const Input = ({ inputType, title, placeholder, handleClick }) => {
   const { nftCurrency } = useContext(NFTContext);
 

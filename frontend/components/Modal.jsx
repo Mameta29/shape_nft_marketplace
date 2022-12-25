@@ -1,14 +1,25 @@
-import { useRef } from 'react';
-import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
+import { useRef } from 'react';
 
 import images from '../assets';
 
+/**
+ * Modal component
+ * @param {*} param0 header, body, footer, handleClose
+ * @returns
+ */
 const Modal = ({ header, body, footer, handleClose }) => {
   const modalRef = useRef(null);
   const { theme } = useTheme();
 
   // check if it is cliked outside of modalRef
+
+  /**
+   * handleClickOutside function
+   * @param {*} e
+   * check if it is cliked outside of modalRef
+   */
   const handleClickOutside = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       handleClose();

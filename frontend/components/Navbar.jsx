@@ -1,14 +1,22 @@
-import { useEffect, useState, useContext } from 'react';
-import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
 
 import images from '../assets';
 import { NFTContext } from '../context/NFTContext';
 import Button from './Button';
 
+/**
+ * MenuItems component
+ * @param {*} param0 isMobile, active, setActive, setIsOpen
+ * @returns
+ */
 const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
+  /**
+   * page links
+   */
   const generateLink = (i) => {
     switch (i) {
       case 0:
@@ -51,6 +59,11 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
   );
 };
 
+/**
+ * ButtonGroup component
+ * @param {*} param0 setActive, router
+ * @returns
+ */
 const ButtonGroup = ({ setActive, router }) => {
   const { connectWallet, currentAccount } = useContext(NFTContext);
 
@@ -76,6 +89,12 @@ const ButtonGroup = ({ setActive, router }) => {
   );
 };
 
+/**
+ * checkActive component
+ * @param {*} active
+ * @param {*} setActive
+ * @param {*} router
+ */
 const checkActive = (active, setActive, router) => {
   switch (router.pathname) {
     case '/':
@@ -95,6 +114,10 @@ const checkActive = (active, setActive, router) => {
   }
 };
 
+/**
+ * Navbar component
+ * @returns
+ */
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [active, setActive] = useState('Explore NFTs');

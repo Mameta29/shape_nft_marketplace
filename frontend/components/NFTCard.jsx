@@ -1,13 +1,20 @@
-import { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
 
 import images from '../assets';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 
+/**
+ * NFTCard
+ * @param {*} param0 nft, onProfilePage
+ * @returns
+ */
 const NFTCard = ({ nft, onProfilePage }) => {
   const { nftCurrency } = useContext(NFTContext);
+
+  console.log('nft:', nft);
 
   return (
     <Link href={{ pathname: '/nft-details', query: nft }}>

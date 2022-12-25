@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import images from '../assets';
 
+/**
+ * SearchBar
+ * @param {*} param0 activeSelect,setActiveSelect,handleSearch,clearSearch
+ * @returns
+ */
 const SearchBar = ({
   activeSelect,
   setActiveSelect,

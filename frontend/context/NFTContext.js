@@ -7,32 +7,43 @@ import { MarketAddress, MarketAddressABI } from './constants';
 
 export const NFTContext = React.createContext();
 
+// create contract data
 const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
 
+/**
+ * NFTProvider component
+ * @param {*} param0 children component
+ * @returns
+ */
 export const NFTProvider = ({ children }) => {
   const nftCurrency = 'ETH';
   const [currentAccount, setCurrentAccount] = useState('');
   const [isLoadingNFT, setIsLoadingNFT] = useState(false);
 
+  /**
+   * fetchNFTs function
+   * @returns
+   */
   const fetchNFTs = async () => {
     setIsLoadingNFT(false);
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // const provider = new ethers.providers.JsonRpcProvider('https://eth-goerli.g.alchemy.com/v2/PPq6amF0yaNOJF3LlBoggF5UIzDSgnEe');
-    const contract = fetchContract(provider);
-    // コントラクトに値がデプロイされているか確認
-    // const getCode = await provider.getCode('0x026C6Ec342c34dC1f37e413Cd65f73cBA9B1879D');
-    // console.log(getCode);
 
+    // get contract object
+    const contract = fetchContract(provider);
+    // get MarketItems
     const data = await contract.fetchMarketItems();
-    console.log(`"toklenId : " ${data}`);
 
     const items = await Promise.all(
       data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+        // get tokenURI
         const tokenURI = await contract.tokenURI(tokenId);
+        // get token metadata
         const {
           data: { image, name, description },
         } = await axios.get(tokenURI);
+        // get NFT price
         const price = ethers.utils.formatUnits(
           unformattedPrice.toString(),
           'ether',
@@ -55,6 +66,9 @@ export const NFTProvider = ({ children }) => {
     return items;
   };
 
+  /**
+   * fetchMyNFTsOrCreatedNFTs function
+   */
   const fetchMyNFTsOrCreatedNFTs = async (type) => {
     setIsLoadingNFT(false);
 
@@ -62,10 +76,10 @@ export const NFTProvider = ({ children }) => {
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
-
+    // get contract object
     const contract = fetchContract(signer);
+    // get data
     const data = type === 'fetchItemsListed' ? await contract.fetchItemsListed() : await contract.fetchMyNFTs();
-    console.log(`data(fetchMyNFTsOrCreatedNFTs) : ${data}`);
 
     const items = await Promise.all(
       data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
@@ -94,52 +108,79 @@ export const NFTProvider = ({ children }) => {
     return items;
   };
 
-  const createSale = async (url, formInputPrice, isReselling, id) => {
+  /**
+   * createSale fucntion
+   * @param {*} url tokenURI url
+   * @param {*} formInputPrice NFT price
+   */
+  const createSale = async (url, formInputPrice) => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
-    // コントラクト確認
-    const getCode = await provider.getCode('0x026C6Ec342c34dC1f37e413Cd65f73cBA9B1879D');
-    console.log(getCode);
-
+    // get price
     const price = ethers.utils.parseUnits(formInputPrice, 'ether');
+    // get contract object
     const contract = fetchContract(signer);
+    // get listing price
     const listingPrice = await contract.getListingPrice();
-    console.log(`listingPeice(NFTContext.js.createSale): ${listingPrice}`);
-    console.log(`id : ${id}`);
 
+    /* resellは、使用しない予定なのでコメントアウト
     const transaction = !isReselling
-      ? await contract.createToken(url, price, { value: listingPrice.toString() })
-      : await contract.resellToken(id, price, { value: listingPrice.toString() });
+      ? await contract.createToken(url, price, {
+        value: listingPrice.toString(),
+      })
+      : await contract.resellToken(id, price, {
+        value: listingPrice.toString(),
+      });
+    */
+
+    // call createToken function
+    const transaction = await contract.createToken(url, price, {
+      value: listingPrice.toString(),
+    });
 
     setIsLoadingNFT(true);
     await transaction.wait();
   };
 
+  /**
+   * buyNft function
+   * @param {*} nft NFT data
+   */
   const buyNft = async (nft) => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
+    // get signer data
     const signer = provider.getSigner();
+    // create contract data
     const contract = new ethers.Contract(
       MarketAddress,
       MarketAddressABI,
       signer,
     );
-
+    // get price
     const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
+
+    // call createMarketSale function
     const transaction = await contract.createMarketSale(nft.tokenId, {
       value: price,
+      gasLimit: 3000000,
     });
+
     setIsLoadingNFT(true);
     await transaction.wait();
     setIsLoadingNFT(false);
   };
 
+  /**
+   * connectWallet function
+   * @returns
+   */
   const connectWallet = async () => {
     if (!window.ethereum) return alert('Please install MetaMask.');
-
+    // get account data
     const accounts = await window.ethereum.request({
       method: 'eth_requestAccounts',
     });
@@ -148,6 +189,10 @@ export const NFTProvider = ({ children }) => {
     window.location.reload();
   };
 
+  /**
+   * checkIfWalletIsConnect function
+   * @returns
+   */
   const checkIfWalletIsConnect = async () => {
     if (!window.ethereum) return alert('Please install MetaMask.');
 

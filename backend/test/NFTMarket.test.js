@@ -20,6 +20,7 @@ describe('NFTMarketplace', function () {
             // コントララクトをデプロイする。
             const NFTMarketplace = await ethers.getContractFactory('NFTMarketplace');
             const market = await NFTMarketplace.deploy();
+            // const marketAddress = await NFTMarketplace.deploy(owner.address);
             
             return {
                   market,
@@ -107,15 +108,17 @@ describe('NFTMarketplace', function () {
             it("create token test", async function () {
                   // コントラクトをデプロイ
                   const { market, owner, otherAccount} = await loadFixture(deployContract);
-                  // price
-                  const price = web3.utils.toWei('0.025');
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
                   // approved flag
                   const approved = true;
 
                   // create token & check emit event
                   await expect(
                         market.createToken(BASE_URL, price, {
-                              value: price
+                              value: listingPrice
                         })
                   ).to.emit(market, "MarketItemCreated");
 
@@ -126,17 +129,39 @@ describe('NFTMarketplace', function () {
                   expect(items.length).to.eql(1);
             });
 
+            it("check setApprovalForAll", async function () {
+                  // コントラクトをデプロイ
+                  const { market, owner, otherAccount } = await loadFixture(deployContract);
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
+                  const approved = true;
+
+                  // create token by otherAccount
+                  const tx = await market.connect(otherAccount).createToken(BASE_URL, price, {
+                        value: listingPrice
+                  });
+                  
+                  const receipt = await tx.wait();
+
+                  const isApproved = await market.isApprovedForAll(otherAccount.address, market.address);
+                  expect(isApproved).to.be.true;
+            });
+
             it("check tokenURI", async function () {
                   // コントラクトをデプロイ
                   const { market, otherAccount} = await loadFixture(deployContract);
-                  // price
-                  const price = web3.utils.toWei('0.025');
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
                   // approved flag
                   const approved = true;
 
                   // create token 
                   market.createToken(BASE_URL, price, {
-                        value: price
+                        value: listingPrice
                   });
 
                   // get tokenURI
@@ -148,8 +173,10 @@ describe('NFTMarketplace', function () {
             it("【error pattern】create token test", async function () {
                   // コントラクトをデプロイ
                   const { market, owner, otherAccount} = await loadFixture(deployContract);
-                  // price
-                  const price = web3.utils.toWei('0.025');
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
                   // approved flag
                   const approved = true;
                   // create token
@@ -161,8 +188,10 @@ describe('NFTMarketplace', function () {
             it("【error pattern2】create token test", async function () {
                   // コントラクトをデプロイ
                   const { market, owner, otherAccount} = await loadFixture(deployContract);
-                  // price
-                  const price = web3.utils.toWei('0.025');
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
                   // approved flag
                   const approved = true;
                   // create token
@@ -176,15 +205,17 @@ describe('NFTMarketplace', function () {
             it("create 10 tokens test", async function () {
                   // コントラクトをデプロイ
                   const { market, owner, otherAccount} = await loadFixture(deployContract);
-                  // price
-                  const price = web3.utils.toWei('0.025');
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
                   // approved flag
                   const approved = true;
                   
                   for(var i = 0; i < 10; i++) {
                         // create token ✖️ 10
                         const id = await market.createToken(BASE_URL, price, {
-                              value: price
+                              value: listingPrice
                         });
                   }
 
@@ -203,13 +234,15 @@ describe('NFTMarketplace', function () {
                   // コントラクトをデプロイ
                   const { market, owner, otherAccount} = await loadFixture(deployContract);
 
-                  // price
-                  const price = web3.utils.toWei('0.025');
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
                   // approved flag
                   const approved = true;
-                  // create token
+                  // // create token
                   const id = await market.createToken(BASE_URL, price, {
-                        value: price
+                        value: listingPrice
                   });
 
                   // get market items 
@@ -239,13 +272,15 @@ describe('NFTMarketplace', function () {
                   // コントラクトをデプロイ
                   const { market, owner, otherAccount} = await loadFixture(deployContract);
       
-                  // price
-                  const price = web3.utils.toWei('0.025');
+                  // listingPrice
+                  const listingPrice = web3.utils.toWei('0.025');
+                  // price of NFT
+                  const price = web3.utils.toWei('0.5');
                   // approved flag
                   const approved = true;
                   // create token
                   const id = await market.connect(otherAccount).createToken(BASE_URL, price, {
-                        value: price
+                        value: listingPrice
                   });
       
                   // get market items 
