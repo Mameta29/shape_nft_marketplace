@@ -34,6 +34,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/create-nft.js"
+    ],
+    "/created-nfts": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/created-nfts.js"
+    ],
+    "/my-nfts": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/my-nfts.js"
     ]
   },
   "ampFirstPages": []
