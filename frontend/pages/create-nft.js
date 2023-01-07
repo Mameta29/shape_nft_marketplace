@@ -27,8 +27,6 @@ const CreateItem = () => {
 
   const pinataApiKey = process.env.NEXT_PUBLIC_PROJECT_ID;
   const pinataApiSecret = process.env.NEXT_PUBLIC_PROJECT_SECRET;
-  console.log(`"pinataApiKey : " ${pinataApiKey}`);
-  console.log(`"pinataApiSecret : " ${pinataApiSecret}`);
 
   /**
    * uploadToInfura function

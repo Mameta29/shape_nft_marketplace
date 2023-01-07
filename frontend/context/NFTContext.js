@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 
+import { slashPay } from '../utils/slashPayment';
 import { MarketAddress, MarketAddressABI } from './constants';
 
 export const NFTContext = React.createContext();
@@ -125,16 +126,6 @@ export const NFTProvider = ({ children }) => {
     // get listing price
     const listingPrice = await contract.getListingPrice();
 
-    /* resellは、使用しない予定なのでコメントアウト
-    const transaction = !isReselling
-      ? await contract.createToken(url, price, {
-        value: listingPrice.toString(),
-      })
-      : await contract.resellToken(id, price, {
-        value: listingPrice.toString(),
-      });
-    */
-
     // call createToken function
     const transaction = await contract.createToken(url, price, {
       value: listingPrice.toString(),
@@ -163,15 +154,17 @@ export const NFTProvider = ({ children }) => {
     // get price
     const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
 
-    // call createMarketSale function
-    const transaction = await contract.createMarketSale(nft.tokenId, {
-      value: price,
-      gasLimit: 3000000,
-    });
+    // call slashPayment function & createMarketSale function
+    const { paymentUrl, paymentToken } = await slashPay().then(async () => {
+      const transaction = await contract.createMarketSale(nft.tokenId, {
+        value: price,
+        gasLimit: 3000000,
+      });
 
-    setIsLoadingNFT(true);
-    await transaction.wait();
-    setIsLoadingNFT(false);
+      setIsLoadingNFT(true);
+      await transaction.wait();
+      setIsLoadingNFT(false);
+    });
   };
 
   /**

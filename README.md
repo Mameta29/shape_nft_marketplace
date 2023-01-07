@@ -76,6 +76,8 @@ cd frontend && yarn dev
 9. [dogechain faucet](https://faucet.dogechain.dog/)
 10. [slashロゴデータ](https://slash.fi/media_kit)
 11. [【Slash】Implement Frontend and Integrate APIs](https://slash-fi.gitbook.io/docs/integration-guide/integration-guide/window-widget-integration/implement-frontend-and-integrate-apis)
+12. [slashApp dashboard](https://testnet.slash.fi/admin/dashboard)
+13. [https://1-notes.com/javascript-create-a-random-string/](https://1-notes.com/javascript-create-a-random-string/)
 
 ### 開発メモ
 1. NFT作成の際に日本語ではなく英語入力にする
