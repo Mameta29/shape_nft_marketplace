@@ -3,7 +3,6 @@ import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 
-import { slashPay } from '../utils/slashPayment';
 import { MarketAddress, MarketAddressABI } from './constants';
 
 export const NFTContext = React.createContext();
@@ -154,17 +153,14 @@ export const NFTProvider = ({ children }) => {
     // get price
     const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
 
-    // call slashPayment function & createMarketSale function
-    const { paymentUrl, paymentToken } = await slashPay().then(async () => {
-      const transaction = await contract.createMarketSale(nft.tokenId, {
-        value: price,
-        gasLimit: 3000000,
-      });
-
-      setIsLoadingNFT(true);
-      await transaction.wait();
-      setIsLoadingNFT(false);
+    const transaction = await contract.createMarketSale(nft.tokenId, {
+      value: price,
+      gasLimit: 3000000,
     });
+
+    setIsLoadingNFT(true);
+    await transaction.wait();
+    setIsLoadingNFT(false);
   };
 
   /**

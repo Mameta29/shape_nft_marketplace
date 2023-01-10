@@ -78,6 +78,8 @@ cd frontend && yarn dev
 11. [【Slash】Implement Frontend and Integrate APIs](https://slash-fi.gitbook.io/docs/integration-guide/integration-guide/window-widget-integration/implement-frontend-and-integrate-apis)
 12. [slashApp dashboard](https://testnet.slash.fi/admin/dashboard)
 13. [https://1-notes.com/javascript-create-a-random-string/](https://1-notes.com/javascript-create-a-random-string/)
+14. [slash extension](https://ext.slash.fi/)
+15. [【GitHub】slash-extension-nft-minting](https://github.com/mashharuki/slash-extension-nft-minting)
 
 ### 開発メモ
 1. NFT作成の際に日本語ではなく英語入力にする
