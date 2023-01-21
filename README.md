@@ -80,6 +80,9 @@ cd frontend && yarn dev
 13. [https://1-notes.com/javascript-create-a-random-string/](https://1-notes.com/javascript-create-a-random-string/)
 14. [slash extension](https://ext.slash.fi/)
 15. [【GitHub】slash-extension-nft-minting](https://github.com/mashharuki/slash-extension-nft-minting)
+16. [【Figma】shape全体像](https://www.figma.com/file/dklO5wpMlUXHhNfJ2TGzj7/Shape?node-id=0%3A1)
+17. [【chainlink】testnet contracts](https://docs.chain.link/any-api/testnet-oracles/)
+18. [【chainlink】hackson resources](https://docs.chain.link/resources/hackathon-resources)
 
 ### 開発メモ
 1. NFT作成の際に日本語ではなく英語入力にする
