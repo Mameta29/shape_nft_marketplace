@@ -1,0 +1,12 @@
+name: CI
+
+on: [push]
+
+jobs:
+  # contract test action
+  contract-test:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+    - name: hardhat test
+      run: cd backend && npm i && npm run test
