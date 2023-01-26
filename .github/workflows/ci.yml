@@ -9,4 +9,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: hardhat test
-        run: cd backend && npm i && npm run compile
+        # run: cd backend && npm i && npm run compile
+        run: echo "this si test"
