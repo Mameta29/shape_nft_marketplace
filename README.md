@@ -51,7 +51,7 @@ cd frontend && yarn dev
 | network           | contract address                             |
 | ----------------- | -------------------------------------------- |
 | Munmbai Network   | [0](https://mumbai.polygonscan.com/address/) |
-| Shibuya Network   | [0xCa2d4842FB28190D0b68A5F620232685A2436CDe](https://blockscout.com/shibuya/address/0xCa2d4842FB28190D0b68A5F620232685A2436CDe) |
+| Shibuya Network   | [0x83f15ccdD1278908dF5bC646E903afE2f342deC1](https://blockscout.com/shibuya/address/0x83f15ccdD1278908dF5bC646E903afE2f342deC1) |
 | Shiden            | [0](https://blockscout.com/shiden/address/)  |
 | Avalanche testnet | [0](https://testnet.snowtrace.io/address/)   |
 | goerli            | [0x290C4c22069B6801f2ba587A8cBba87d37d4980C](https://goerli.etherscan.io/address/0x290C4c22069B6801f2ba587A8cBba87d37d4980C)    |
@@ -83,6 +83,10 @@ cd frontend && yarn dev
 16. [【Figma】shape全体像](https://www.figma.com/file/dklO5wpMlUXHhNfJ2TGzj7/Shape?node-id=0%3A1)
 17. [【chainlink】testnet contracts](https://docs.chain.link/any-api/testnet-oracles/)
 18. [【chainlink】hackson resources](https://docs.chain.link/resources/hackathon-resources)
+19. [【Zenn】AstarテストネットにデプロイしたコントラクトをHardhatからVerifyする](https://zenn.dev/pokena/articles/f54111c987e0c5)
+20. [Hardhat Verification Plugin](https://docs.blockscout.com/for-users/verifying-a-smart-contract/hardhat-verification-plugin#config-file)
+21. [hardhat-etherscan](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan#adding-support-for-other-networks)
+22. [【Sample】verified contract](https://blockscout.com/shibuya/address/0x83f15ccdD1278908dF5bC646E903afE2f342deC1)
 
 ### 開発メモ
 1. NFT作成の際に日本語ではなく英語入力にする

@@ -2,6 +2,7 @@ require('dotenv').config();
 require('@nomicfoundation/hardhat-toolbox');
 require('@nomiclabs/hardhat-etherscan');
 require("@nomiclabs/hardhat-web3");
+require('hardhat-deploy');
 
 /** @type import('hardhat/config').HardhatUserConfig */
 
@@ -9,6 +10,7 @@ const {
   ALCHEMY_GOERLI_URL,
   ALCHEMY_MUMBAI_URL,
   PRIVATE_KEY,
+  GNOSISSCAN_API_KEY
   // ETHERSCAN_KEY,
 } = process.env;
 
@@ -62,7 +64,20 @@ module.exports = {
     //   accounts: [`0x${PRIVATE_KEY}`],
     // },
   },
-  // etherscan: {
-  //   apiKey: ETHERSCAN_KEY,
-  // },
+  etherscan: {
+    apiKey: {
+      shibuya: GNOSISSCAN_API_KEY
+    },
+    customChains: [
+      {
+        network: "shibuya",
+        chainId: 81,
+        urls: {
+          apiURL: "https://blockscout.com/shibuya/api",
+          browserURL: "https://blockscout.com/shibuya/"
+        }
+      }
+    ]
+  },
+  
 };
