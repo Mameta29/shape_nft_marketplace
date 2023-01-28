@@ -12,6 +12,7 @@ import creator8 from './creator8.png';
 import creator9 from './creator9.png';
 import cross from './cross.png';
 import discord from './discord.png';
+import github from './github-white.png';
 import headerbg from './headerbg.png';
 import heartOutline from './heart-outline.png';
 import heart from './heart.png';
@@ -86,4 +87,5 @@ export default {
   ShapeLogoNoBackground,
   paymentButton,
   note,
+  github,
 };
