@@ -36,3 +36,5 @@ function receivePayment(
 ```
 
 ## slashで決済する場合には、priceは表示するがその場でJPYに変換してやる必要がある。
+
+⇨ 日本円で指定してあげる必要がある。

@@ -1,5 +1,8 @@
 import marketAbi from './contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
+// payment URL
+export const PAYMENY_URL = 'https://testnet.slash.fi/payment-merchant/5529fcdc623e2ae843667e437ba2f889';
+
 // contract address & ABI
 
 /* goerli */
