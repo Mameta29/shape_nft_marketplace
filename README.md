@@ -51,7 +51,7 @@ cd frontend && yarn dev
 | network           | contract address                             |
 | ----------------- | -------------------------------------------- |
 | Munmbai Network   | [0](https://mumbai.polygonscan.com/address/) |
-| Shibuya Network   | [0x83f15ccdD1278908dF5bC646E903afE2f342deC1](https://blockscout.com/shibuya/address/0x83f15ccdD1278908dF5bC646E903afE2f342deC1) |
+| Shibuya Network   | [0x3c955E552Fd383435765313330301c23f014e0a6](https://blockscout.com/shibuya/address/0x3c955E552Fd383435765313330301c23f014e0a6) |
 | Shiden            | [0](https://blockscout.com/shiden/address/)  |
 | Avalanche testnet | [0](https://testnet.snowtrace.io/address/)   |
 | goerli            | [0x290C4c22069B6801f2ba587A8cBba87d37d4980C](https://goerli.etherscan.io/address/0x290C4c22069B6801f2ba587A8cBba87d37d4980C)    |

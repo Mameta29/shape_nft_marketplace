@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
+import Link from 'next/link';
 import images from '../assets';
 import { Button, Loader, Modal } from '../components';
 import { NFTContext } from '../context/NFTContext';
@@ -200,6 +201,9 @@ const AssetDetails = () => {
    * checkout component
    */
   const checkout = async () => {
+    // test code for slash
+
+    // call buyNft function
     await buyNft(nft);
     setPaymentModal(false);
     setSuccessModal(true);
@@ -342,6 +346,16 @@ const AssetDetails = () => {
           body={<PaymentBodyCmp nft={nft} nftCurrency={nftCurrency} />}
           footer={(
             <div className="flex flex-row sm:flex-col">
+              <Link href="https://testnet.slash.fi/payment-merchant/5529fcdc623e2ae843667e437ba2f889">
+                <Image
+                  src={images.paymentButton}
+                  width={100}
+                  height={20}
+                  objectFit="contain"
+                  classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                  alt="payment"
+                />
+              </Link>
               <Button
                 btnName="Checkout"
                 btnType="primary"

@@ -17,7 +17,7 @@
     "deploy:shibuya": "npx hardhat run scripts/deploy.js --network shibuya",
     "deploy:shiden": "npx hardhat run scripts/deploy.js --network shiden",
     "deploy:astar": "npx hardhat run scripts/deploy.js --network astar",
-    "verify:shibuya": "npx hardhat verify --network shibuya 0x83f15ccdD1278908dF5bC646E903afE2f342deC1"
+    "verify:shibuya": "npx hardhat verify --network shibuya 0x3c955E552Fd383435765313330301c23f014e0a6"
   },
   "dependencies": {
     "@nomiclabs/hardhat-etherscan": "^3.1.5",
