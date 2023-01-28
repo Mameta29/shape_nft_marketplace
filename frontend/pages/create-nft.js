@@ -186,7 +186,7 @@ const CreateItem = () => {
     <div className="flex justify-center sm:px-4 p-12">
       <div className="w-3/5 md:w-full">
         <h1 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl">
-          Create new item
+          Create new NFT
         </h1>
 
         <div className="mt-16">
