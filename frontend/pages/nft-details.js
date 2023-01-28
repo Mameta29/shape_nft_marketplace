@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import images from '../assets';
 import { Button, Loader, Modal } from '../components';
+import { PAYMENY_URL } from '../context/constants';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 
@@ -346,7 +347,7 @@ const AssetDetails = () => {
           body={<PaymentBodyCmp nft={nft} nftCurrency={nftCurrency} />}
           footer={(
             <div className="flex flex-row sm:flex-col">
-              <Link href="https://testnet.slash.fi/payment-merchant/5529fcdc623e2ae843667e437ba2f889">
+              <Link href={PAYMENY_URL}>
                 <Image
                   src={images.paymentButton}
                   width={100}

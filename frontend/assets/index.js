@@ -31,6 +31,7 @@ import nft6 from './nft6.jpeg';
 import nft7 from './nft7.png';
 import nft8 from './nft8.png';
 import nft9 from './nft9.png';
+import note from './note.png';
 import paymentButton from './paymentButton.png';
 import right from './right.png';
 import search from './Search.png';
@@ -84,4 +85,5 @@ export default {
   ShapeLogo,
   ShapeLogoNoBackground,
   paymentButton,
+  note,
 };

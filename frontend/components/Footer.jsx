@@ -33,6 +33,24 @@ const FooterLinks = ({ heading, items, extraClasses }) => (
 const Footer = () => {
   const { theme } = useTheme();
 
+  // image data arrary
+  const pngs = [
+    images.instagram,
+    images.twitter,
+    images.telegram,
+    images.discord,
+    images.note,
+  ];
+
+  // image url array
+  const links = [
+    '#',
+    'https://twitter.com/Shape_ProjectJa',
+    '#',
+    '#',
+    'https://note.com/shape_fit',
+  ];
+
   return (
     <footer className="flexCenter flex-col border-t dark:border-nft-black-1 border-nft-gray-1 sm:py-8 py-16">
       <div className="w-full minmd:w-4/5 flex flex-row md:flex-col sm:px-4 px-16">
@@ -92,22 +110,19 @@ const Footer = () => {
             CrpytoKet, Inc. All Rights Reserved
           </p>
           <div className="flex flex-row sm:mt-4">
-            {[
-              images.instagram,
-              images.twitter,
-              images.telegram,
-              images.discord,
-            ].map((image, index) => (
+            {pngs.map((image, index) => (
               <div className="mx-2 cursor-pointer" key={`image ${index}`}>
-                <Image
-                  src={image}
-                  key={index}
-                  objectFit="contain"
-                  width={24}
-                  height={24}
-                  alt="social"
-                  className={theme === 'light' ? 'filter invert' : undefined}
-                />
+                <a href={links[index]}>
+                  <Image
+                    src={image}
+                    key={index}
+                    objectFit="contain"
+                    width={24}
+                    height={24}
+                    alt="social"
+                    className={theme === 'light' ? 'filter invert' : undefined}
+                  />
+                </a>
               </div>
             ))}
           </div>
