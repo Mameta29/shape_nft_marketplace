@@ -13,6 +13,7 @@ import "hardhat/console.sol";
  * NFTMarketplace Contract
  */
 contract NFTMarketplace is ERC721URIStorage, ISlashCustomPlugin {
+    event Payment(address from, address to, uint amount);
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemsSold;
@@ -176,6 +177,7 @@ contract NFTMarketplace is ERC721URIStorage, ISlashCustomPlugin {
 
       // set purchaseInfo 
       purchaseInfo[paymentId] = optional;
+      emit Payment(msg.sender, owner, amount);
     }
 
     /**

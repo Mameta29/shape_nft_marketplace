@@ -39,11 +39,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/my-nfts.js"
-    ],
-    "/nft-details": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/nft-details.js"
     ]
   },
   "ampFirstPages": []
