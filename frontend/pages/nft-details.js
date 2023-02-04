@@ -2,10 +2,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-import Link from 'next/link';
 import images from '../assets';
 import { Button, Loader, Modal } from '../components';
-import { PAYMENY_URL } from '../context/constants';
+import PaymentButton from '../components/PaymentButton';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 
@@ -347,16 +346,7 @@ const AssetDetails = () => {
           body={<PaymentBodyCmp nft={nft} nftCurrency={nftCurrency} />}
           footer={(
             <div className="flex flex-row sm:flex-col">
-              <Link href={PAYMENY_URL}>
-                <Image
-                  src={images.paymentButton}
-                  width={100}
-                  height={20}
-                  objectFit="contain"
-                  classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
-                  alt="payment"
-                />
-              </Link>
+              <PaymentButton />
               <Button
                 btnName="Checkout"
                 btnType="primary"

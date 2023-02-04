@@ -15,11 +15,6 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -33,16 +28,12 @@
     "/create-nft": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-<<<<<<< HEAD
-      "static/chunks/pages/created-nfts.js"
+      "static/chunks/pages/create-nft.js"
     ],
     "/my-nfts": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/my-nfts.js"
-=======
-      "static/chunks/pages/create-nft.js"
->>>>>>> 1b223de555905199896fb1492e0e37cd592737f4
     ]
   },
   "ampFirstPages": []
