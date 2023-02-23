@@ -1,21 +1,19 @@
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 /**
  * UniversalERC20 library
  */
 library UniversalERC20 {
-      using SafeMath for uint256;
+      using Address for address payable;
       using SafeERC20 for IERC20;
 
-      IERC20 private constant ZERO_ADDRESS = IERC20(0x0000000000000000000000000000000000000000);
-      IERC20 private constant ETH_ADDRESS = IERC20(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE);
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      // functions 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      IERC20 private constant ZERO_ADDRESS =
+            IERC20(0x0000000000000000000000000000000000000000);
+      IERC20 private constant ETH_ADDRESS =
+            IERC20(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE);
 
       function universalTransfer(
             IERC20 token,
@@ -27,7 +25,7 @@ library UniversalERC20 {
             }
 
             if (isETH(token)) {
-                  payable(address(uint160(to))).transfer(amount);
+                  payable(address(uint160(to))).sendValue(amount);
                   return true;
             } else {
                   token.safeTransfer(to, amount);
@@ -51,10 +49,10 @@ library UniversalERC20 {
                   "Wrong useage of ETH.universalTransferFrom()"
                   );
                   if (to != address(this)) {
-                  payable(address(uint160(to))).transfer(amount);
+                  payable(address(uint160(to))).sendValue(amount);
                   }
                   if (msg.value > amount) {
-                  payable(msg.sender).transfer(msg.value.sub(amount));
+                  payable(msg.sender).sendValue(msg.value - amount);
                   }
             } else {
                   token.safeTransferFrom(from, to, amount);
@@ -71,7 +69,7 @@ library UniversalERC20 {
             if (isETH(token)) {
                   if (msg.value > amount) {
                   // Return remainder if exist
-                  payable(msg.sender).transfer(msg.value.sub(amount));
+                  payable(msg.sender).sendValue(msg.value - amount);
                   }
             } else {
                   token.safeTransferFrom(msg.sender, address(this), amount);
